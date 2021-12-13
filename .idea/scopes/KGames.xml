@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="KGames" pattern="file[KGames.main]:*/||file[KGames]:.gitignore||file[KGames]:build.gradle.kts||file[KGames]:gradle.properties||file[KGames]:settings.gradle.kts" />
+</component>

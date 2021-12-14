@@ -1,6 +1,6 @@
 package core.input.keyboard.keymap
 
-import core.input.keyboard.keymap.held.KeyHeldImp
+import core.input.keyboard.keymap.justpressed.KeyJustPressedImp
 import core.input.keyboard.keymap.pressed.KeyPressedImp
 import core.input.keyboard.keymap.released.KeyReleasedImp
 
@@ -13,8 +13,8 @@ class KeyMapFactory {
             return keyMap ?: run {
                 keyMap = KeyMap(
                     KeyReleasedImp(),
-                    KeyPressedImp(),
-                    KeyHeldImp()
+                    KeyJustPressedImp(),
+                    KeyPressedImp()
                 )
                 keyMap as KeyMap
             }

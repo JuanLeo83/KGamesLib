@@ -119,4 +119,5 @@ interface KeyPressed {
     fun setKeyDownPressed(function: () -> Unit)
     fun setKeyLeftPressed(function: () -> Unit)
     fun setKeyRightPressed(function: () -> Unit)
+
 }

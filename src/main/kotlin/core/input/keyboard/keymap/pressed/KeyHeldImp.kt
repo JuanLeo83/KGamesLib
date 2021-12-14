@@ -9,7 +9,7 @@ class KeyPressedImp : KeyPressed {
     override fun getKeyPressedActions() = keyActions
 
     private fun setKeyPressed(key: Int, function: () -> Unit) {
-        keyActions.add(KeyAction(key, GLFW_PRESS, function))
+        keyActions.add(KeyAction(key, GLFW_REPEAT, function))
     }
 
     override fun setKeyAPressed(function: () -> Unit) {

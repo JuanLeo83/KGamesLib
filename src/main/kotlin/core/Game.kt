@@ -19,6 +19,7 @@ class Game(
             videoGame.setInputs()
         }
         loop() {
+            inputManager.update()
             videoGame.gameLoop()
         }
         dispose() {

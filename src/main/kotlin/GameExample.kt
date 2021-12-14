@@ -67,24 +67,30 @@ class GameExample(
 
     override fun setInputs() {
         inputManager.addKeyboard(
-            KeyBoard(windowManager)
+            GameKeyboard(windowManager)
         )
 //        inputManager.addMouse()
     }
 
 }
 
-class KeyBoard(
+class GameKeyboard(
     windowManager: WindowManager
 ) : Keyboard() {
 
     init {
         with(keyMap) {
-            setKeyAReleased { println("Key A released, oh yeah!!!") }
-            setKeyBPressed { println("Key B pressed, oh yeah!!!") }
+            setKeyAJustPressed { println("Key A just pressed") }
+            setKeyAReleased { println("Key A released") }
 
+            setKeySJustPressed { println("Key S just pressed") }
+
+            setKeyDReleased { println("Key D released") }
+
+            setKeyFPressed { println("Key F pressed") }
+
+            setKeySpaceJustPressed { println("Key SPACE just pressed") }
             setKeySpacePressed { println("Key SPACE pressed") }
-            setKeySpaceHeld { println("Key SPACE held") }
             setKeySpaceReleased { println("Key SPACE released") }
 
             setKeyEscReleased { windowManager.close() }

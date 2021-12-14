@@ -1,17 +1,21 @@
 package core.input.keyboard.keymap
 
+import core.input.keyboard.keymap.held.KeyHeld
 import core.input.keyboard.keymap.pressed.KeyPressed
-import core.input.keyboard.keymap.release.KeyRelease
+import core.input.keyboard.keymap.released.KeyReleased
 
 class KeyMap(
-    private val keyRelease: KeyRelease,
-    private val keyPressed: KeyPressed
-) : KeyRelease by keyRelease,
-    KeyPressed by keyPressed {
+    private val keyReleased: KeyReleased,
+    private val keyPressed: KeyPressed,
+    private val keyHeld: KeyHeld
+) : KeyReleased by keyReleased,
+    KeyPressed by keyPressed,
+    KeyHeld by keyHeld {
 
     fun getKeyActions(): List<KeyAction> {
-        return keyRelease.getKeyReleaseActions() +
-                keyPressed.getKeyPressedActions()
+        return keyReleased.getKeyReleaseActions() +
+                keyPressed.getKeyPressedActions() +
+                keyHeld.getKeyHeldActions()
     }
 
 }

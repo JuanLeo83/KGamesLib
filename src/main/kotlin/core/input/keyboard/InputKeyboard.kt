@@ -7,6 +7,7 @@ import org.lwjgl.glfw.GLFWKeyCallback
 class InputKeyboard(
     private val keyMap: KeyMap,
 ) : GLFWKeyCallback() {
+
     override fun invoke(
         window: kotlin.Long,
         key: kotlin.Int,

@@ -80,9 +80,14 @@ class KeyBoard(
 
     init {
         with(keyMap) {
-            setKeyARelease { println("Key A released, oh yeah!!!") }
+            setKeyAReleased { println("Key A released, oh yeah!!!") }
             setKeyBPressed { println("Key B pressed, oh yeah!!!") }
-            setKeyEscRelease { windowManager.close() }
+
+            setKeySpacePressed { println("Key SPACE pressed") }
+            setKeySpaceHeld { println("Key SPACE held") }
+            setKeySpaceReleased { println("Key SPACE released") }
+
+            setKeyEscReleased { windowManager.close() }
         }
     }
 

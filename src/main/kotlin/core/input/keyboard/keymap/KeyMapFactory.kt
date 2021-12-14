@@ -1,7 +1,8 @@
 package core.input.keyboard.keymap
 
+import core.input.keyboard.keymap.held.KeyHeldImp
 import core.input.keyboard.keymap.pressed.KeyPressedImp
-import core.input.keyboard.keymap.release.KeyReleaseImp
+import core.input.keyboard.keymap.released.KeyReleasedImp
 
 class KeyMapFactory {
 
@@ -11,8 +12,9 @@ class KeyMapFactory {
         fun getInstance(): KeyMap {
             return keyMap ?: run {
                 keyMap = KeyMap(
-                    KeyReleaseImp(),
-                    KeyPressedImp()
+                    KeyReleasedImp(),
+                    KeyPressedImp(),
+                    KeyHeldImp()
                 )
                 keyMap as KeyMap
             }

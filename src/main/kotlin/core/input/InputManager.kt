@@ -1,8 +1,8 @@
 package core.input
 
+import KeyBoard
 import core.config.WindowManager
 import core.input.keyboard.InputKeyboard
-import core.input.keyboard.KeyMap
 import org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback
 import org.lwjgl.glfw.GLFW.glfwSetKeyCallback
 import org.lwjgl.glfw.GLFWCursorPosCallback
@@ -15,10 +15,10 @@ class InputManager(
     private var keyCallback: GLFWKeyCallback? = null
     private var mousePositionCallback: GLFWCursorPosCallback? = null
 
-    fun addKeyboard(keyMap: KeyMap) {
+    fun addKeyboard(keyBoard: KeyBoard) {
         keyCallback = glfwSetKeyCallback(
             windowManager.getWindow(),
-            InputKeyboard(keyMap)
+            InputKeyboard(keyBoard.keyMap)
         )
     }
 

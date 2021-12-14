@@ -1,7 +1,7 @@
 import core.VideoGame
 import core.config.WindowManager
 import core.input.InputManager
-import core.input.keyboard.KeyMap
+import core.input.keyboard.Keyboard
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.glfw.GLFW.glfwGetTime
 import org.lwjgl.opengl.GL11.*
@@ -66,16 +66,24 @@ class GameExample(
     }
 
     override fun setInputs() {
-        inputManager.addKeyboard(KeyBoard(windowManager))
+        inputManager.addKeyboard(
+            KeyBoard(windowManager)
+        )
 //        inputManager.addMouse()
     }
 
 }
 
-class KeyBoard(windowManager: WindowManager) : KeyMap() {
+class KeyBoard(
+    windowManager: WindowManager
+) : Keyboard() {
+
     init {
-        setKeyARelease { println("Key A pressed, oh yeah!!!") }
-        setKeyBRelease { println("Key B pressed, oh yeah!!!") }
-        setKeyEscRelease { windowManager.close() }
+        with(keyMap) {
+            setKeyARelease { println("Key A released, oh yeah!!!") }
+            setKeyBPressed { println("Key B pressed, oh yeah!!!") }
+            setKeyEscRelease { windowManager.close() }
+        }
     }
+
 }

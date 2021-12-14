@@ -1,4 +1,4 @@
-package core.input.keyboard
+package core.input.keyboard.keymap
 
 class KeyAction(
     private val key: Int,

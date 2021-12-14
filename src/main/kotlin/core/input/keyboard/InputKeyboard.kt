@@ -1,5 +1,7 @@
 package core.input.keyboard
 
+import core.input.keyboard.keymap.KeyAction
+import core.input.keyboard.keymap.KeyMap
 import org.lwjgl.glfw.GLFWKeyCallback
 
 class InputKeyboard(

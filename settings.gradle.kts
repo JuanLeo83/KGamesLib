@@ -1,3 +1,3 @@
 
-rootProject.name = "KGames"
+rootProject.name = "KGamesLib"
 

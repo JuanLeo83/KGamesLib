@@ -6,7 +6,7 @@ import org.lwjgl.system.MemoryUtil
 class WindowManager(
     private val width: Int = 800,
     private val height: Int = 600,
-    private val title: String = "KGame :)",
+    private val title: String = "KGamesLib Hello World :)",
     private val fullScreen: Boolean = false
 ) {
 

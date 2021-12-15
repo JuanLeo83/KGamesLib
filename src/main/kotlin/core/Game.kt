@@ -16,7 +16,7 @@ class Game(
 
     fun start() {
         initialize() {
-            videoGame.setInputs()
+            videoGame.initialize()
         }
         loop() {
             inputManager.update()

@@ -12,13 +12,16 @@ import java.nio.IntBuffer
 
 class GameExample(
     private val windowManager: WindowManager,
-    private val inputManager: InputManager
-) : VideoGame {
+    inputManager: InputManager
+) : VideoGame(inputManager) {
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 
     override fun initialize() {
-        TODO("Not yet implemented")
+        setInputs(
+            GameKeyboard(windowManager),
+            GameMouse()
+        )
     }
 
     override fun gameLoop() {
@@ -64,13 +67,6 @@ class GameExample(
     override fun dispose() {
         MemoryUtil.memFree(width)
         MemoryUtil.memFree(height)
-    }
-
-    override fun setInputs() {
-        with(inputManager) {
-            addKeyboard(GameKeyboard(windowManager))
-            addMouse(GameMouse())
-        }
     }
 
 }

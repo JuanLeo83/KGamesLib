@@ -67,13 +67,9 @@ class GameExample(
     }
 
     override fun setInputs() {
-        inputManager.addKeyboard(
-            GameKeyboard(windowManager)
-        )
-        inputManager.addMouse(
-            GameMouse()
-        ) { xpos, ypos ->
-            println("Mouse movement ($xpos, $ypos)")
+        with(inputManager) {
+            addKeyboard(GameKeyboard(windowManager))
+            addMouse(GameMouse())
         }
     }
 
@@ -90,6 +86,10 @@ class GameMouse : Mouse() {
 
             setRightButtonReleased { println("R mouse just released") }
         }
+    }
+
+    override fun mouseMovementAction(xPosition: Double, yPosition: Double): Unit {
+        println("Mouse movement ($xPosition, $yPosition)")
     }
 }
 

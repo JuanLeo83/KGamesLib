@@ -25,8 +25,8 @@ class InputManager(
         inputs.add(keyboard)
     }
 
-    fun addMouse(gameMouse: Mouse, movementAction: (x: Double, y: Double) -> Unit) {
-        val mouse = InputMouse(windowManager, gameMouse.buttonMap, movementAction)
+    fun addMouse(gameMouse: Mouse) {
+        val mouse = InputMouse(windowManager, gameMouse.buttonMap, gameMouse::mouseMovementAction)
         mousePositionCallback = glfwSetCursorPosCallback(windowManager.getWindow(), mouse)
         inputs.add(mouse)
     }

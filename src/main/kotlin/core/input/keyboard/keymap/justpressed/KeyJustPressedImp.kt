@@ -1,15 +1,16 @@
 package core.input.keyboard.keymap.justpressed
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
+import core.input.State
 import org.lwjgl.glfw.GLFW.*
 
 class KeyJustPressedImp : KeyJustPressed {
 
-    private val keyActions = ArrayList<KeyAction>()
+    private val keyActions = ArrayList<Action>()
     override fun getKeyJustPressedActions() = keyActions
 
     private fun setKeyJustPressed(key: Int, function: () -> Unit) {
-        keyActions.add(KeyAction(key, GLFW_PRESS, function))
+        keyActions.add(Action(key, State.JustPressed, function))
     }
 
     override fun setKeyAJustPressed(function: () -> Unit) {

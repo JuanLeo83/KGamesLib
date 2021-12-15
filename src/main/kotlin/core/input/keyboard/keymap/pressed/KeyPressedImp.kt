@@ -1,15 +1,16 @@
 package core.input.keyboard.keymap.pressed
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
+import core.input.State
 import org.lwjgl.glfw.GLFW.*
 
 class KeyPressedImp : KeyPressed {
 
-    private val keyActions = ArrayList<KeyAction>()
+    private val keyActions = ArrayList<Action>()
     override fun getKeyPressedActions() = keyActions
 
     private fun setKeyPressed(key: Int, function: () -> Unit) {
-        keyActions.add(KeyAction(key, GLFW_REPEAT, function))
+        keyActions.add(Action(key, State.Pressed, function))
     }
 
     override fun setKeyAPressed(function: () -> Unit) {

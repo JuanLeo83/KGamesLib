@@ -1,10 +1,10 @@
 package core.input.keyboard.keymap.justpressed
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
 
 interface KeyJustPressed {
 
-    fun getKeyJustPressedActions(): List<KeyAction>
+    fun getKeyJustPressedActions(): List<Action>
 
     fun setKeyAJustPressed(function: () -> Unit)
     fun setKeyBJustPressed(function: () -> Unit)

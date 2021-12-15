@@ -1,10 +1,10 @@
 package core.input.keyboard.keymap.released
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
 
 interface KeyReleased {
 
-    fun getKeyReleaseActions(): List<KeyAction>
+    fun getKeyReleasedActions(): List<Action>
 
     fun setKeyAReleased(function: () -> Unit)
     fun setKeyBReleased(function: () -> Unit)

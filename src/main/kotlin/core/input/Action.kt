@@ -1,13 +1,13 @@
-package core.input.keyboard.keymap
+package core.input
 
-class KeyAction(
+class Action(
     private val key: Int,
-    private val action: Int,
+    private val state: State,
     private val function: () -> Unit
 ) {
 
     fun getKey() = key
-    fun getAction() = action
+    fun getState() = state
 
     fun execute() {
         function()

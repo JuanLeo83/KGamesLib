@@ -1,10 +1,10 @@
 package core.input.keyboard.keymap.pressed
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
 
 interface KeyPressed {
 
-    fun getKeyPressedActions(): List<KeyAction>
+    fun getKeyPressedActions(): List<Action>
 
     fun setKeyAPressed(function: () -> Unit)
     fun setKeyBPressed(function: () -> Unit)

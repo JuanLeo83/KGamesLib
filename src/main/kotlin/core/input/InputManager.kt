@@ -1,8 +1,10 @@
 package core.input
 
-import GameKeyboard
 import core.config.WindowManager
 import core.input.keyboard.InputKeyboard
+import core.input.keyboard.Keyboard
+import core.input.mouse.InputMouse
+import core.input.mouse.Mouse
 import org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback
 import org.lwjgl.glfw.GLFWCursorPosCallback
 
@@ -18,16 +20,15 @@ class InputManager(
         inputs.forEach { it.update() }
     }
 
-    fun addKeyboard(gameKeyboard: GameKeyboard) {
+    fun addKeyboard(gameKeyboard: Keyboard) {
         val keyboard = InputKeyboard(windowManager, gameKeyboard.keyMap)
         inputs.add(keyboard)
     }
 
-    fun addMouse() {
-        mousePositionCallback = glfwSetCursorPosCallback(
-            windowManager.getWindow(),
-            InputMouse() {}
-        )
+    fun addMouse(gameMouse: Mouse, movementAction: (x: Double, y: Double) -> Unit) {
+        val mouse = InputMouse(windowManager, gameMouse.buttonMap, movementAction)
+        mousePositionCallback = glfwSetCursorPosCallback(windowManager.getWindow(), mouse)
+        inputs.add(mouse)
     }
 
     fun dispose() {

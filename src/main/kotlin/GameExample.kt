@@ -2,6 +2,7 @@ import core.VideoGame
 import core.config.WindowManager
 import core.input.InputManager
 import core.input.keyboard.Keyboard
+import core.input.mouse.Mouse
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.glfw.GLFW.glfwGetTime
 import org.lwjgl.opengl.GL11.*
@@ -69,9 +70,27 @@ class GameExample(
         inputManager.addKeyboard(
             GameKeyboard(windowManager)
         )
-//        inputManager.addMouse()
+        inputManager.addMouse(
+            GameMouse()
+        ) { xpos, ypos ->
+            println("Mouse movement ($xpos, $ypos)")
+        }
     }
 
+}
+
+class GameMouse : Mouse() {
+    init {
+        with(buttonMap) {
+            setLeftButtonJustPressed { println("L mouse just pressed") }
+            setLeftButtonPressed { println("L mouse pressed") }
+            setLeftButtonReleased { println("L mouse released") }
+
+            setCenterButtonJustPressed { println("C mouse just pressed") }
+
+            setRightButtonReleased { println("R mouse just released") }
+        }
+    }
 }
 
 class GameKeyboard(

@@ -1,15 +1,16 @@
 package core.input.keyboard.keymap.released
 
-import core.input.keyboard.keymap.KeyAction
+import core.input.Action
+import core.input.State
 import org.lwjgl.glfw.GLFW.*
 
 class KeyReleasedImp : KeyReleased {
 
-    private val keyActions = ArrayList<KeyAction>()
-    override fun getKeyReleaseActions() = keyActions
+    private val keyActions = ArrayList<Action>()
+    override fun getKeyReleasedActions() = keyActions
 
     private fun setKeyReleased(key: Int, function: () -> Unit) {
-        keyActions.add(KeyAction(key, GLFW_RELEASE, function))
+        keyActions.add(Action(key, State.Released, function))
     }
 
     override fun setKeyAReleased(function: () -> Unit) {

@@ -1,8 +1,9 @@
 package core.input.keyboard
 
 import core.config.WindowManager
+import core.input.Action
 import core.input.Input
-import core.input.keyboard.keymap.KeyAction
+import core.input.State
 import core.input.keyboard.keymap.KeyMap
 import org.lwjgl.glfw.GLFW.*
 
@@ -26,13 +27,13 @@ class InputKeyboard(
         }
     }
 
-    private fun getKeyState(key: Int): KeyState? {
+    private fun getKeyState(key: Int): State? {
         return if (isKeyJustPressed(key)) {
-            KeyState.JustPressed
+            State.JustPressed
         } else if (isKeyPressed(key)) {
-            KeyState.Pressed
+            State.Pressed
         } else if (isKeyReleased(key)) {
-            KeyState.Released
+            State.Released
         } else null
     }
 
@@ -44,15 +45,10 @@ class InputKeyboard(
 
     private fun isKeyReleased(key: Int) = !keys[key] && previousKeyStates[key]
 
-    private fun findKeyAction(key: Int, state: KeyState): KeyAction? {
+    private fun findKeyAction(key: Int, state: State): Action? {
         return keyMap
-            .getKeyActions()
-            .find { key == it.getKey() && state.action == it.getAction() }
+            .getActions()
+            .find { key == it.getKey() && state == it.getState() }
     }
 
-    sealed class KeyState(val action: Int) {
-        object JustPressed : KeyState(GLFW_PRESS)
-        object Pressed : KeyState(GLFW_REPEAT)
-        object Released : KeyState(GLFW_RELEASE)
-    }
 }

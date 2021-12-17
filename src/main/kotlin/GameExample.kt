@@ -1,8 +1,7 @@
-import core.VideoGame
-import core.config.WindowManager
-import core.input.InputManager
-import core.input.keyboard.Keyboard
-import core.input.mouse.Mouse
+import kgames.core.config.WindowManager
+import kgames.core.input.InputManager
+import kgames.core.input.keyboard.Keyboard
+import kgames.core.input.mouse.Mouse
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.glfw.GLFW.glfwGetTime
 import org.lwjgl.opengl.GL11.*
@@ -13,7 +12,7 @@ import java.nio.IntBuffer
 class GameExample(
     private val windowManager: WindowManager,
     inputManager: InputManager
-) : VideoGame(inputManager) {
+) : kgames.core.VideoGame(inputManager) {
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 
@@ -85,7 +84,7 @@ class GameMouse : Mouse() {
     }
 
     override fun mouseMovementAction(xPosition: Double, yPosition: Double): Unit {
-        println("Mouse movement ($xPosition, $yPosition)")
+//        println("Mouse movement ($xPosition, $yPosition)")
     }
 }
 

@@ -5,7 +5,7 @@ plugins {
     application
 }
 
-group = "me.jgperez"
+group = "com.onemanforall"
 version = "1.0.0-SNAPSHOT"
 
 repositories {

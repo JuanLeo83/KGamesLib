@@ -1,3 +1,4 @@
+import kgames.core.VideoGame
 import kgames.core.config.WindowManager
 import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
@@ -12,7 +13,7 @@ import java.nio.IntBuffer
 class GameExample(
     private val windowManager: WindowManager,
     inputManager: InputManager
-) : kgames.core.VideoGame(inputManager) {
+) : VideoGame(inputManager) {
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 

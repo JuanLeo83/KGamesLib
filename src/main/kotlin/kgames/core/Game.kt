@@ -10,21 +10,14 @@ import org.lwjgl.opengl.GL11.*
 class Game(
     private val windowManager: WindowManager,
     private val inputManager: InputManager,
-    private val videoGame: kgames.core.VideoGame
+    private val videoGame: VideoGame
 ) {
     private var errorCallback: GLFWErrorCallback? = null
 
     fun start() {
-        initialize() {
-            videoGame.initialize()
-        }
-        loop() {
-            inputManager.update()
-            videoGame.gameLoop()
-        }
-        dispose() {
-            videoGame.dispose()
-        }
+        initialize() { videoGame.initialize() }
+        loop() { videoGame.gameLoop() }
+        dispose() { videoGame.dispose() }
     }
 
     private fun initialize(gameInit: () -> Unit) {
@@ -52,6 +45,8 @@ class Game(
 
         while (glfwWindowShouldClose(windowManager.getWindow()) == GLFW_FALSE) {
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+
+            inputManager.update()
 
             gameLoop()
 

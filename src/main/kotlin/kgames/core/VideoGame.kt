@@ -10,7 +10,7 @@ abstract class VideoGame(
     abstract fun gameLoop()
     abstract fun dispose()
 
-    fun setInputs(vararg devices: InputDevice) {
+    protected fun setInputs(vararg devices: InputDevice) {
         devices.forEach { device -> device.add(inputManager) }
     }
 }

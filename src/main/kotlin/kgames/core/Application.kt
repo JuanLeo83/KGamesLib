@@ -5,8 +5,8 @@ import kgames.core.file.KFolder
 import kgames.core.input.InputManager
 
 fun main(args: Array<String>) {
-//    initGame()
-    testFileManager()
+    initGame()
+//    testFileManager()
 }
 
 fun initGame() {

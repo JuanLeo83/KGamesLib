@@ -32,6 +32,6 @@ class InputManager(
     }
 
     fun dispose() {
-        mousePositionCallback?.release()
+        mousePositionCallback?.free()
     }
 }

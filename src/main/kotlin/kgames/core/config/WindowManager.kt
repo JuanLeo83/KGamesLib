@@ -1,6 +1,7 @@
 package kgames.core.config
 
 import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.glfw.GLFWVidMode
 import org.lwjgl.system.MemoryUtil
 
 class WindowManager(
@@ -51,7 +52,9 @@ class WindowManager(
 
     private fun setWindowPositionInScreen() {
         if (!fullScreen) {
-            val vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor())
+            val vidmode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
+            check(vidmode != null) { "Vidmode is null" }
+
             glfwSetWindowPos(
                 window,
                 (vidmode.width() - actualWidth) / 2,
@@ -65,7 +68,7 @@ class WindowManager(
     }
 
     fun close() {
-        glfwSetWindowShouldClose(window, GLFW_TRUE)
+        glfwSetWindowShouldClose(window, true)
     }
 
 }

@@ -22,7 +22,7 @@ class Game(
 
     private fun initialize(gameInit: () -> Unit) {
         setErrorCallback()
-        check(glfwInit() == GLFW_TRUE) { "Unable to initialize GLFW" }
+        check(glfwInit()) { "Unable to initialize GLFW" }
         createWindow()
 
         gameInit()
@@ -43,7 +43,7 @@ class Game(
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
 
-        while (glfwWindowShouldClose(windowManager.getWindow()) == GLFW_FALSE) {
+        while (!glfwWindowShouldClose(windowManager.getWindow())) {
             glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
 
             inputManager.update()
@@ -63,7 +63,7 @@ class Game(
         glfwDestroyWindow(windowManager.getWindow())
 
         glfwTerminate()
-        errorCallback?.release()
+        errorCallback?.free()
     }
 
 }

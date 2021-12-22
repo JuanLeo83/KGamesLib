@@ -12,11 +12,13 @@ class InputKeyboard(
     private val keyMap: KeyMap,
 ) : Input {
 
+    private val firstValidKeyCode = 32
+
     private val previousKeyStates = Array<Boolean>(GLFW_KEY_LAST) { false }
     private val keys = Array<Boolean>(GLFW_KEY_LAST) { false }
 
     override fun update() {
-        keys.forEachIndexed { key, _ ->
+        for (key in firstValidKeyCode until GLFW_KEY_LAST) {
             keys[key] = requestKeyStatus(key)
 
             getKeyState(key)?.let {

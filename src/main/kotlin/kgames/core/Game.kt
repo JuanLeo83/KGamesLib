@@ -1,7 +1,8 @@
 package kgames.core
 
-import kgames.core.config.WindowManager
+import kgames.core.audio.AudioManager
 import kgames.core.input.InputManager
+import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
@@ -10,6 +11,7 @@ import org.lwjgl.opengl.GL11.*
 class Game(
     private val windowManager: WindowManager,
     private val inputManager: InputManager,
+    private val audioManager: AudioManager,
     private val videoGame: VideoGame
 ) {
     private var errorCallback: GLFWErrorCallback? = null
@@ -24,6 +26,7 @@ class Game(
         setErrorCallback()
         check(glfwInit()) { "Unable to initialize GLFW" }
         createWindow()
+        audioManager.init()
 
         gameInit()
 
@@ -59,8 +62,8 @@ class Game(
         gameDispose()
 
         inputManager.dispose()
-
-        glfwDestroyWindow(windowManager.getWindow())
+        audioManager.dispose()
+        windowManager.dispose()
 
         glfwTerminate()
         errorCallback?.free()

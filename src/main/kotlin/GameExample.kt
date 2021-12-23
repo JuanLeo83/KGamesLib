@@ -1,8 +1,9 @@
 import kgames.core.VideoGame
-import kgames.core.config.WindowManager
+import kgames.core.audio.Sound
 import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.Mouse
+import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.glfw.GLFW.glfwGetTime
 import org.lwjgl.opengl.GL11.*
@@ -17,11 +18,17 @@ class GameExample(
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 
+    private lateinit var sound: Sound
+
     override fun initialize() {
+        sound = Sound("audio/sound.ogg", false)
+
         setInputs(
-            GameKeyboard(windowManager),
+            GameKeyboard(windowManager, sound),
             GameMouse()
         )
+
+        sound.play()
     }
 
     override fun gameLoop() {
@@ -67,6 +74,8 @@ class GameExample(
     override fun dispose() {
         MemoryUtil.memFree(width)
         MemoryUtil.memFree(height)
+
+        sound.dispose()
     }
 
 }
@@ -90,7 +99,8 @@ class GameMouse : Mouse() {
 }
 
 class GameKeyboard(
-    windowManager: WindowManager
+    windowManager: WindowManager,
+    sound: Sound
 ) : Keyboard() {
 
     init {
@@ -109,6 +119,17 @@ class GameKeyboard(
             setKeySpaceReleased { println("Key SPACE released") }
 
             setKeyEscReleased { windowManager.close() }
+
+            setKeyF7JustPressed {
+                if (sound.isPlaying()) {
+                    sound.pause()
+                } else {
+                    sound.resume()
+                }
+            }
+            setKeyF8JustPressed {
+                sound.stop()
+            }
         }
     }
 

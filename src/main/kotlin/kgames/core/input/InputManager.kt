@@ -1,10 +1,10 @@
 package kgames.core.input
 
-import kgames.core.config.WindowManager
 import kgames.core.input.keyboard.InputKeyboard
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.InputMouse
 import kgames.core.input.mouse.Mouse
+import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.glfwSetCursorPosCallback
 import org.lwjgl.glfw.GLFWCursorPosCallback
 

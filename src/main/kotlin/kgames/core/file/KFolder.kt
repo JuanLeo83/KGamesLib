@@ -8,6 +8,12 @@ class KFolder(
     duplicatesStrategy: DuplicatesStrategy = DuplicatesStrategy.EXCLUDE
 ) : FileHandler(name, folderPath, duplicatesStrategy) {
 
+    companion object {
+        fun getRootFolder(): KFolder {
+            return KFolder("")
+        }
+    }
+
     override fun create(): Boolean {
         return if (!getFolder().mkdir()) {
             manageDuplicate()

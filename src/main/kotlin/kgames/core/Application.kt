@@ -1,8 +1,9 @@
 import kgames.core.Game
-import kgames.core.config.WindowManager
+import kgames.core.audio.AudioManager
 import kgames.core.file.KFile
 import kgames.core.file.KFolder
 import kgames.core.input.InputManager
+import kgames.core.window.WindowManager
 
 fun main(args: Array<String>) {
     initGame()
@@ -12,11 +13,13 @@ fun main(args: Array<String>) {
 fun initGame() {
     val windowManager = WindowManager()
     val inputManager = InputManager(windowManager)
+    val audioManager = AudioManager()
     val videoGame = GameExample(windowManager, inputManager)
 
     Game(
         windowManager = windowManager,
         inputManager = inputManager,
+        audioManager = audioManager,
         videoGame = videoGame
     ).start()
 }

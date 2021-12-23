@@ -1,4 +1,4 @@
-package kgames.core.config
+package kgames.core.window
 
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWVidMode
@@ -69,6 +69,10 @@ class WindowManager(
 
     fun close() {
         glfwSetWindowShouldClose(window, true)
+    }
+
+    fun dispose() {
+        glfwDestroyWindow(window)
     }
 
 }

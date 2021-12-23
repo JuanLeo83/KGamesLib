@@ -1,10 +1,10 @@
 package kgames.core.input.keyboard
 
-import kgames.core.config.WindowManager
 import kgames.core.input.Action
 import kgames.core.input.Input
 import kgames.core.input.State
 import kgames.core.input.keyboard.keymap.KeyMap
+import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.*
 
 class InputKeyboard(

@@ -1,7 +1,10 @@
 package kgames.example
 
 import kgames.core.audio.Sound
+import kgames.core.input.InputDevice
+import kgames.core.input.InputManager
 import kgames.core.scene.Scene
+import kgames.core.scene.SceneConfig
 import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
@@ -10,14 +13,24 @@ import org.lwjgl.system.MemoryUtil
 import java.nio.IntBuffer
 
 class Stage1(
-    private val windowManager: WindowManager
-) : Scene() {
+    private val windowManager: WindowManager,
+    inputManager: InputManager
+) : Scene(inputManager) {
+
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 
     private lateinit var sound: Sound
 
+    override fun setSceneConfig() {
+        val stage1Inputs = ArrayList<InputDevice>()
+        stage1Inputs.add(GameKeyboard(windowManager))
+        sceneConfig = SceneConfig(stage1Inputs)
+    }
+
     override fun initialize() {
+        super.initialize()
+
         sound = Sound("audio/sound.ogg", false)
         sound.play()
     }

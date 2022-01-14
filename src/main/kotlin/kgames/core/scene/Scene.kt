@@ -1,9 +1,25 @@
 package kgames.core.scene
 
-abstract class Scene {
+import kgames.core.input.InputManager
 
-    abstract fun initialize()
+abstract class Scene(
+    private val inputManager: InputManager
+) {
+
+    protected var sceneConfig: SceneConfig? = null
+
+    abstract fun setSceneConfig()
+    open fun initialize() {
+        setSceneConfig()
+        setInputs()
+    }
+
     abstract fun update()
     abstract fun dispose()
+
+    private fun setInputs() {
+        check(sceneConfig != null) { "The scene need a sceneConfig" }
+        sceneConfig?.devices?.forEach { device -> device.add(inputManager) }
+    }
 
 }

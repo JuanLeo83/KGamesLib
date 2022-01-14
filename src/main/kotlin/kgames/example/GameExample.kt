@@ -2,6 +2,7 @@ package kgames.example
 
 import kgames.core.VideoGame
 import kgames.core.audio.Sound
+import kgames.core.input.InputDevice
 import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.Mouse
@@ -14,12 +15,15 @@ class GameExample(
 ) : VideoGame(inputManager) {
 
     override fun initialize() {
-//        setInputs(
-//            kgames.example.GameKeyboard(windowManager, sound),
-//            kgames.example.GameMouse()
-//        )
+        val stage1Inputs = ArrayList<InputDevice>()
+        stage1Inputs.add(GameKeyboard(windowManager))
+        sceneLoader.addScene(
+            Stage1(
+                windowManager,
+                inputManager,
 
-        sceneLoader.addScene(Stage1(windowManager))
+                )
+        )
 
         sceneLoader.currentScene.initialize()
     }
@@ -54,7 +58,7 @@ class GameMouse : Mouse() {
 
 class GameKeyboard(
     windowManager: WindowManager,
-    sound: Sound
+    sound: Sound? = null
 ) : Keyboard() {
 
     init {
@@ -75,14 +79,14 @@ class GameKeyboard(
             setKeyEscReleased { windowManager.close() }
 
             setKeyF7JustPressed {
-                if (sound.isPlaying()) {
+                if (sound?.isPlaying() == true) {
                     sound.pause()
                 } else {
-                    sound.resume()
+                    sound?.resume()
                 }
             }
             setKeyF8JustPressed {
-                sound.stop()
+                sound?.stop()
             }
         }
     }

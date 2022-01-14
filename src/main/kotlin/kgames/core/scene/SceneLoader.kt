@@ -1,6 +1,10 @@
 package kgames.core.scene
 
-class SceneLoader {
+import kgames.core.input.InputManager
+
+class SceneLoader(
+    inputManager: InputManager
+) {
 
     private val sceneDefaultPosition = 0
 
@@ -23,6 +27,11 @@ class SceneLoader {
 
     private fun selectSceneDefault() {
         currentScene = scenes[sceneDefaultPosition]
+    }
+
+    private fun selectScene(scenePosition: Int) {
+        currentScene.dispose()
+        currentScene = scenes[scenePosition]
     }
 
 }

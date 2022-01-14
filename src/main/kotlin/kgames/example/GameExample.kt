@@ -1,81 +1,35 @@
+package kgames.example
+
 import kgames.core.VideoGame
 import kgames.core.audio.Sound
 import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.Mouse
 import kgames.core.window.WindowManager
-import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
-import org.lwjgl.glfw.GLFW.glfwGetTime
-import org.lwjgl.opengl.GL11.*
-import org.lwjgl.system.MemoryUtil
-import java.nio.IntBuffer
 
 
 class GameExample(
     private val windowManager: WindowManager,
     inputManager: InputManager
 ) : VideoGame(inputManager) {
-    private var width: IntBuffer = MemoryUtil.memAllocInt(1)
-    private var height: IntBuffer = MemoryUtil.memAllocInt(1)
-
-    private lateinit var sound: Sound
 
     override fun initialize() {
-        sound = Sound("audio/sound.ogg", false)
+//        setInputs(
+//            kgames.example.GameKeyboard(windowManager, sound),
+//            kgames.example.GameMouse()
+//        )
 
-        setInputs(
-            GameKeyboard(windowManager, sound),
-            GameMouse()
-        )
+        sceneLoader.addScene(Stage1(windowManager))
 
-        sound.play()
+        sceneLoader.currentScene.initialize()
     }
 
     override fun gameLoop() {
-        renderTriangle()
-    }
-
-    private fun renderTriangle() {
-        /* Get width and height to calculate the ratio */
-        glfwGetFramebufferSize(windowManager.getWindow(), width, height)
-        val ratio = width.get() / height.get()
-
-        /* Rewind buffers for next get */
-        width.rewind()
-        height.rewind()
-
-        glViewport(0, 0, width.get(), height.get())
-
-        /* Set ortographic projection */
-        glMatrixMode(GL_PROJECTION)
-        glLoadIdentity()
-        glOrtho(-ratio.toDouble(), ratio.toDouble(), -1.0, 1.0, 1.0, -1.0)
-        glMatrixMode(GL_MODELVIEW)
-
-        /* Rotate matrix */
-        glLoadIdentity()
-        glRotatef(glfwGetTime().toFloat() * 50f, 0f, 0f, 1f)
-
-        /* Render triangle */
-        glBegin(GL_TRIANGLES)
-        glColor3f(1f, 0f, 0f)
-        glVertex3f(-0.6f, -0.4f, 0f)
-        glColor3f(0f, 1f, 0f)
-        glVertex3f(0.6f, -0.4f, 0f)
-        glColor3f(0f, 0f, 1f)
-        glVertex3f(0f, 0.6f, 0f)
-        glEnd()
-
-        /* Flip buffers for next loop */
-        width.flip()
-        height.flip()
+        sceneLoader.currentScene.update()
     }
 
     override fun dispose() {
-        MemoryUtil.memFree(width)
-        MemoryUtil.memFree(height)
-
-        sound.dispose()
+        sceneLoader.currentScene.dispose()
     }
 
 }

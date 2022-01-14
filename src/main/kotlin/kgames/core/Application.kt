@@ -4,6 +4,7 @@ import kgames.core.file.KFile
 import kgames.core.file.KFolder
 import kgames.core.input.InputManager
 import kgames.core.window.WindowManager
+import kgames.example.GameExample
 
 fun main(args: Array<String>) {
     initGame()

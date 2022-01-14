@@ -1,0 +1,28 @@
+package kgames.core.scene
+
+class SceneLoader {
+
+    private val sceneDefaultPosition = 0
+
+    private val scenes = ArrayList<Scene>()
+    lateinit var currentScene: Scene
+
+    fun setScenes(vararg scenes: Scene) {
+        scenes.forEach(::addScene)
+        selectSceneDefault()
+    }
+
+    fun addScene(scene: Scene, order: Int? = null) {
+        order?.let {
+            scenes.add(order, scene)
+        } ?: run {
+            scenes.add(scene)
+        }
+        selectSceneDefault()
+    }
+
+    private fun selectSceneDefault() {
+        currentScene = scenes[sceneDefaultPosition]
+    }
+
+}

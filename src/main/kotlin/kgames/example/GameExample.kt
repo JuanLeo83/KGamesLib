@@ -2,7 +2,6 @@ package kgames.example
 
 import kgames.core.VideoGame
 import kgames.core.audio.Sound
-import kgames.core.input.InputDevice
 import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.Mouse
@@ -15,15 +14,8 @@ class GameExample(
 ) : VideoGame(inputManager) {
 
     override fun initialize() {
-        val stage1Inputs = ArrayList<InputDevice>()
-        stage1Inputs.add(GameKeyboard(windowManager))
-        sceneLoader.addScene(
-            Stage1(
-                windowManager,
-                inputManager,
-
-                )
-        )
+        sceneLoader.addScene(Stage2(windowManager, inputManager))
+        sceneLoader.addScene(Stage1(windowManager, inputManager))
 
         sceneLoader.currentScene.initialize()
     }

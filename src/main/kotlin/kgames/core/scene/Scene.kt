@@ -9,13 +9,17 @@ abstract class Scene(
     protected var sceneConfig: SceneConfig? = null
 
     abstract fun setSceneConfig()
+
     open fun initialize() {
         setSceneConfig()
         setInputs()
     }
 
     abstract fun update()
-    abstract fun dispose()
+
+    open fun dispose() {
+        inputManager.resetInputs()
+    }
 
     private fun setInputs() {
         check(sceneConfig != null) { "The scene need a sceneConfig" }

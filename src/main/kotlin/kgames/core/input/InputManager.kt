@@ -31,6 +31,10 @@ class InputManager(
         inputs.add(mouse)
     }
 
+    fun resetInputs() {
+        inputs.clear()
+    }
+
     fun dispose() {
         mousePositionCallback?.free()
     }

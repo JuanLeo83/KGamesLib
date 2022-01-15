@@ -23,9 +23,9 @@ class Stage1(
     private lateinit var sound: Sound
 
     override fun setSceneConfig() {
-        val stage1Inputs = ArrayList<InputDevice>()
-        stage1Inputs.add(GameKeyboard(windowManager))
-        sceneConfig = SceneConfig(stage1Inputs)
+        val inputs = ArrayList<InputDevice>()
+        inputs.add(GameKeyboard(windowManager))
+        sceneConfig = SceneConfig(inputs)
     }
 
     override fun initialize() {
@@ -76,6 +76,8 @@ class Stage1(
     }
 
     override fun dispose() {
+        super.dispose()
+
         MemoryUtil.memFree(width)
         MemoryUtil.memFree(height)
 

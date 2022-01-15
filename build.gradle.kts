@@ -11,6 +11,9 @@ version = "0.0.1"
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+    }
 }
 
 dependencies {
@@ -35,6 +38,8 @@ dependencies {
     runtimeOnly("org.lwjgl:lwjgl-openal::$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-opengl::$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-stb::$lwjglNatives")
+
+    implementation("org.joml:joml:1.10.3")
 
     testImplementation(kotlin("test"))
 }

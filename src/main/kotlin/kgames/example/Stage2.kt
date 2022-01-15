@@ -2,6 +2,7 @@ package kgames.example
 
 import kgames.core.input.InputDevice
 import kgames.core.input.InputManager
+import kgames.core.render.Texture
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneConfig
 import kgames.core.window.WindowManager
@@ -11,6 +12,8 @@ class Stage2(
     inputManager: InputManager
 ) : Scene(inputManager) {
 
+    private lateinit var sprite: Texture
+
     override fun setSceneConfig() {
         val inputs = ArrayList<InputDevice>()
         inputs.add(GameMouse())
@@ -18,8 +21,21 @@ class Stage2(
         sceneConfig = SceneConfig(inputs)
     }
 
+    override fun initialize() {
+        super.initialize()
+
+        sprite = Texture("sprite/ship.png")
+    }
+
     override fun update() {
-        println("Stage 2: update")
+        sprite.bind(0)
+        sprite.render()
+    }
+
+    override fun dispose() {
+        super.dispose()
+
+        sprite.dispose()
     }
 
 }

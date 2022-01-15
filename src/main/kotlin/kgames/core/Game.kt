@@ -27,6 +27,8 @@ class Game(
         check(glfwInit()) { "Unable to initialize GLFW" }
         createWindow()
         audioManager.init()
+        GL.createCapabilities()
+        glEnable(GL_TEXTURE_2D)
 
         gameInit()
 

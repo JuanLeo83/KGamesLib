@@ -10,7 +10,7 @@ abstract class VideoGame(
     protected val sceneLoader = SceneLoader(inputManager)
 
     abstract fun initialize()
-    abstract fun gameLoop()
+    abstract fun gameLoop(deltaTime: Double)
     abstract fun dispose()
 
 }

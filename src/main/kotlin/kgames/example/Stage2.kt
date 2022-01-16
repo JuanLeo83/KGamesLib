@@ -35,8 +35,9 @@ class Stage2(
         sprite.setScale(scale)
     }
 
-    override fun update() {
+    override fun update(deltaTime: Double) {
         sprite.render()
+        println("${getFPS(deltaTime)} FPS")
     }
 
     override fun dispose() {

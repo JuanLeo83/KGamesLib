@@ -20,8 +20,8 @@ class GameExample(
         sceneLoader.currentScene.initialize()
     }
 
-    override fun gameLoop() {
-        sceneLoader.currentScene.update()
+    override fun gameLoop(deltaTime: Double) {
+        sceneLoader.currentScene.update(deltaTime)
     }
 
     override fun dispose() {

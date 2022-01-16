@@ -2,6 +2,7 @@ package kgames.core
 
 import kgames.core.audio.AudioManager
 import kgames.core.input.InputManager
+import kgames.core.util.KTime
 import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
@@ -18,7 +19,7 @@ class Game(
 
     fun start() {
         initialize() { videoGame.initialize() }
-        loop() { videoGame.gameLoop() }
+        loop() { deltaTime -> videoGame.gameLoop(deltaTime) }
         dispose() { videoGame.dispose() }
     }
 
@@ -43,7 +44,10 @@ class Game(
         windowManager.createWindow()
     }
 
-    private fun loop(gameLoop: () -> Unit) {
+    private fun loop(gameLoop: (deltaTime: Double) -> Unit) {
+        var beginTime = KTime.getTime()
+        var endTime: Double = 0.0
+        var deltaTime: Double = 0.0
         GL.createCapabilities()
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
@@ -53,10 +57,14 @@ class Game(
 
             inputManager.update()
 
-            gameLoop()
+            gameLoop(deltaTime)
 
             glfwSwapBuffers(windowManager.getWindow())
             glfwPollEvents()
+
+            endTime = KTime.getTime()
+            deltaTime = endTime - beginTime
+            beginTime = endTime
         }
     }
 

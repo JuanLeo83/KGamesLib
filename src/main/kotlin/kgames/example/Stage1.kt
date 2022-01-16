@@ -35,7 +35,7 @@ class Stage1(
         sound.play()
     }
 
-    override fun update() {
+    override fun update(deltaTime: Double) {
         renderTriangle()
     }
 

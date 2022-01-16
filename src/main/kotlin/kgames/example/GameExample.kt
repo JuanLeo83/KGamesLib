@@ -50,7 +50,8 @@ class GameMouse : Mouse() {
 
 class GameKeyboard(
     windowManager: WindowManager,
-    sound: Sound? = null
+    sound: Sound? = null,
+    scale: (() -> Unit)? = null
 ) : Keyboard() {
 
     init {
@@ -80,6 +81,8 @@ class GameKeyboard(
             setKeyF8JustPressed {
                 sound?.stop()
             }
+
+            setKey1Pressed { scale?.let { it() } }
         }
     }
 

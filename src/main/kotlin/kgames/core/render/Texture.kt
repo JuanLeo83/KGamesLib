@@ -18,6 +18,8 @@ class Texture(
     private var width: Int
     private var height: Int
 
+    private var scale = 0.5f
+
     init {
         val file = getFile()
         val bufferedImage = ImageIO.read(file)
@@ -61,14 +63,18 @@ class Texture(
     fun render() {
         glBegin(GL_QUADS)
         glTexCoord2f(0f, 0f)
-        glVertex2f(-0.5f, 0.5f)
+        glVertex2f(-scale, scale)
         glTexCoord2f(1f, 0f)
-        glVertex2f(0.5f, 0.5f)
+        glVertex2f(scale, scale)
         glTexCoord2f(1f, 1f)
-        glVertex2f(0.5f, -0.5f)
+        glVertex2f(scale, -scale)
         glTexCoord2f(0f, 1f)
-        glVertex2f(-0.5f, -0.5f)
+        glVertex2f(-scale, -scale)
         glEnd()
+    }
+
+    fun setScale(scale: Float) {
+        this.scale = scale
     }
 
     fun dispose() {

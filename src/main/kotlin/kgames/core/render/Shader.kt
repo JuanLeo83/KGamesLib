@@ -34,26 +34,20 @@ class Shader(
         glBindAttribLocation(programObject, 1, "textures")
 
         glLinkProgram(programObject)
-        if (glGetProgrami(programObject, GL_LINK_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(programObject))
-            exitProcess(1)
-        }
+        checkCompileStatus(programObject, GL_LINK_STATUS)
 
         glValidateProgram(programObject)
-        if (glGetProgrami(programObject, GL_VALIDATE_STATUS) != 1) {
-            System.err.println(glGetProgramInfoLog(programObject))
-            exitProcess(1)
-        }
+        checkCompileStatus(programObject, GL_VALIDATE_STATUS)
     }
 
     private fun loadShaderObject(shaderObject: Int, file: KFile) {
         glShaderSource(shaderObject, file.loadAsString())
         glCompileShader(shaderObject)
-        checkCompileStatus(shaderObject)
+        checkCompileStatus(shaderObject, GL_COMPILE_STATUS)
     }
 
-    private fun checkCompileStatus(shaderObject: Int) {
-        if (glGetShaderi(shaderObject, GL_COMPILE_STATUS) != 1) {
+    private fun checkCompileStatus(shaderObject: Int, status: Int) {
+        if (glGetShaderi(shaderObject, status) != 1) {
             System.err.println(glGetShaderInfoLog(shaderObject));
             exitProcess(1)
         }
@@ -80,6 +74,10 @@ class Shader(
         if (location != -1) {
             glUniformMatrix4fv(location, false, matrixData)
         }
+    }
+
+    fun render() {
+        glUseProgram(programObject);
     }
 
     fun dispose() {

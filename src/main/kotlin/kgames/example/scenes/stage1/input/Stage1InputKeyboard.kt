@@ -1,25 +1,26 @@
 package kgames.example.scenes.stage1.input
 
 import kgames.core.DependencyManager
-import kgames.core.audio.Sound
+import kgames.core.event.EventEmitter
 import kgames.core.input.keyboard.Keyboard
+import kgames.example.scenes.stage1.Stage1Event
 
 class Stage1InputKeyboard(
-    sound: Sound?
+    gameEvents: EventEmitter
 ) : Keyboard() {
 
     init {
         with(keyMap) {
             setKeyMJustPressed {
-                if (sound?.isPlaying() == true) {
-                    sound.pause()
-                } else {
-                    sound?.resume()
-                }
+                gameEvents.emit(Stage1Event.PlayMusic)
+            }
+
+            setKeyBJustPressed {
+                gameEvents.emit(Stage1Event.PauseMusic)
             }
 
             setKeyNJustPressed {
-                sound?.stop()
+                gameEvents.emit(Stage1Event.StopMusic)
             }
 
             setKeyEscReleased { DependencyManager.windowManager.close() }

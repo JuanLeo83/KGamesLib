@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL11
 import org.lwjgl.system.MemoryUtil
 import java.nio.IntBuffer
 
-class Stage1() : Scene() {
+class Stage1 : Scene() {
 
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
@@ -19,15 +19,23 @@ class Stage1() : Scene() {
     private lateinit var sound: Sound
 
     override fun setSceneConfig() {
-        inputs.add(Stage1InputKeyboard(sound))
+        inputs.add(Stage1InputKeyboard(gameEvents))
         sceneConfig = SceneConfig(inputs)
     }
 
     override fun initialize() {
-        sound = Sound("audio/sound.ogg", false)
         super.initialize()
 
-        sound.play()
+        sound = Sound("audio/sound.ogg", false)
+//        sound.play()
+
+        listenEvents {
+            when (it) {
+                is Stage1Event.PlayMusic -> sound.play()
+                is Stage1Event.PauseMusic -> sound.pause()
+                is Stage1Event.StopMusic -> sound.stop()
+            }
+        }
     }
 
     override fun update(deltaTime: Double) {
@@ -45,7 +53,7 @@ class Stage1() : Scene() {
 
         GL11.glViewport(0, 0, width.get(), height.get())
 
-        /* Set ortographic projection */
+        /* Set orthographic projection */
         GL11.glMatrixMode(GL11.GL_PROJECTION)
         GL11.glLoadIdentity()
         GL11.glOrtho(-ratio.toDouble(), ratio.toDouble(), -1.0, 1.0, 1.0, -1.0)

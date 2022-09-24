@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    val lwjglVersion = "3.3.0"
+    val lwjglVersion = "3.3.1"
     implementation(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))
 
     implementation("org.lwjgl:lwjgl")
@@ -39,7 +39,9 @@ dependencies {
     runtimeOnly("org.lwjgl:lwjgl-opengl::$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-stb::$lwjglNatives")
 
-    implementation("org.joml:joml:1.10.3")
+    implementation("org.joml:joml:1.10.4")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     testImplementation(kotlin("test"))
 }

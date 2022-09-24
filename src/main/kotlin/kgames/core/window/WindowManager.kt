@@ -5,8 +5,8 @@ import org.lwjgl.glfw.GLFWVidMode
 import org.lwjgl.system.MemoryUtil
 
 class WindowManager(
-    private val width: Int = 800,
-    private val height: Int = 600,
+    width: Int = 800,
+    height: Int = 600,
     private val title: String = "KGamesLib Hello World :)",
     private val fullScreen: Boolean = false
 ) {

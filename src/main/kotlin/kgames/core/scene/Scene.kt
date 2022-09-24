@@ -1,10 +1,8 @@
 package kgames.core.scene
 
-import kgames.core.input.InputManager
+import kgames.core.DependencyManager
 
-abstract class Scene(
-    private val inputManager: InputManager
-) {
+abstract class Scene() {
 
     protected var sceneConfig: SceneConfig? = null
 
@@ -18,12 +16,12 @@ abstract class Scene(
     abstract fun update(deltaTime: Double)
 
     open fun dispose() {
-        inputManager.resetInputs()
+        DependencyManager.inputManager.resetInputs()
     }
 
     private fun setInputs() {
         check(sceneConfig != null) { "The scene need a sceneConfig" }
-        sceneConfig?.devices?.forEach { device -> device.add(inputManager) }
+        sceneConfig?.devices?.forEach { device -> device.add(DependencyManager.inputManager) }
     }
 
     protected fun getFPS(deltaTime: Double): Int {

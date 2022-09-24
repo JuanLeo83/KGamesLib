@@ -1,21 +1,17 @@
 package kgames.example
 
+import kgames.core.DependencyManager
 import kgames.core.audio.Sound
 import kgames.core.input.InputDevice
-import kgames.core.input.InputManager
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneConfig
-import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.opengl.GL11
 import org.lwjgl.system.MemoryUtil
 import java.nio.IntBuffer
 
-class Stage1(
-    private val windowManager: WindowManager,
-    inputManager: InputManager
-) : Scene(inputManager) {
+class Stage1() : Scene() {
 
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
@@ -24,7 +20,7 @@ class Stage1(
 
     override fun setSceneConfig() {
         val inputs = ArrayList<InputDevice>()
-        inputs.add(GameKeyboard(windowManager))
+        inputs.add(GameKeyboard())
         sceneConfig = SceneConfig(inputs)
     }
 
@@ -41,7 +37,7 @@ class Stage1(
 
     private fun renderTriangle() {
         /* Get width and height to calculate the ratio */
-        glfwGetFramebufferSize(windowManager.getWindow(), width, height)
+        glfwGetFramebufferSize(DependencyManager.windowManager.getWindow(), width, height)
         val ratio = width.get() / height.get()
 
         /* Rewind buffers for next get */

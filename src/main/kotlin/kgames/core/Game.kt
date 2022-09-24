@@ -1,20 +1,18 @@
 package kgames.core
 
-import kgames.core.audio.AudioManager
-import kgames.core.input.InputManager
 import kgames.core.util.KTime
-import kgames.core.window.WindowManager
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWErrorCallback
 import org.lwjgl.opengl.GL
 import org.lwjgl.opengl.GL11.*
 
 class Game(
-    private val windowManager: WindowManager,
-    private val inputManager: InputManager,
-    private val audioManager: AudioManager,
     private val videoGame: VideoGame
 ) {
+    private val windowManager = DependencyManager.windowManager
+    private val inputManager = DependencyManager.inputManager
+    private val audioManager = DependencyManager.audioManager
+
     private var errorCallback: GLFWErrorCallback? = null
 
     fun start() {
@@ -27,13 +25,10 @@ class Game(
         setErrorCallback()
         check(glfwInit()) { "Unable to initialize GLFW" }
         createWindow()
-        audioManager.init()
-        GL.createCapabilities()
-        glEnable(GL_TEXTURE_2D)
-
+        initAudio()
+        initGL()
         gameInit()
-
-        glfwShowWindow(windowManager.getWindow())
+        showWindow()
     }
 
     private fun setErrorCallback() {
@@ -44,10 +39,23 @@ class Game(
         windowManager.createWindow()
     }
 
+    private fun initAudio() {
+        audioManager.init()
+    }
+
+    private fun initGL() {
+        GL.createCapabilities()
+        glEnable(GL_TEXTURE_2D)
+    }
+
+    private fun showWindow() {
+        glfwShowWindow(windowManager.getWindow())
+    }
+
     private fun loop(gameLoop: (deltaTime: Double) -> Unit) {
         var beginTime = KTime.getTime()
-        var endTime: Double = 0.0
-        var deltaTime: Double = 0.0
+        var endTime = 0.0
+        var deltaTime = 0.0
         GL.createCapabilities()
 
         glClearColor(0.0f, 0.0f, 0.0f, 0.0f)

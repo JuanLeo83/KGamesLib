@@ -1,30 +1,12 @@
-import kgames.core.Game
-import kgames.core.audio.AudioManager
 import kgames.core.file.KFile
 import kgames.core.file.KFolder
-import kgames.core.input.InputManager
-import kgames.core.window.WindowManager
+import kgames.core.initGame
 import kgames.example.GameExample
 
 fun main(args: Array<String>) {
-    initGame()
+    initGame(GameExample())
 //    testFileManager()
 }
-
-fun initGame() {
-    val windowManager = WindowManager()
-    val inputManager = InputManager(windowManager)
-    val audioManager = AudioManager()
-    val videoGame = GameExample(windowManager, inputManager)
-
-    Game(
-        windowManager = windowManager,
-        inputManager = inputManager,
-        audioManager = audioManager,
-        videoGame = videoGame
-    ).start()
-}
-
 
 fun testFileManager() {
 

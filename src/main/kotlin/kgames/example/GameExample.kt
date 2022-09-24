@@ -1,31 +1,19 @@
 package kgames.example
 
+import kgames.core.DependencyManager
 import kgames.core.VideoGame
 import kgames.core.audio.Sound
-import kgames.core.input.InputManager
 import kgames.core.input.keyboard.Keyboard
 import kgames.core.input.mouse.Mouse
-import kgames.core.window.WindowManager
 
 
-class GameExample(
-    private val windowManager: WindowManager,
-    inputManager: InputManager
-) : VideoGame(inputManager) {
+class GameExample() : VideoGame() {
 
     override fun initialize() {
-        sceneLoader.addScene(Stage2(windowManager, inputManager))
-        sceneLoader.addScene(Stage1(windowManager, inputManager))
+        sceneLoader.addScene(Stage2())
+        sceneLoader.addScene(Stage1())
 
         sceneLoader.currentScene.initialize()
-    }
-
-    override fun gameLoop(deltaTime: Double) {
-        sceneLoader.currentScene.update(deltaTime)
-    }
-
-    override fun dispose() {
-        sceneLoader.currentScene.dispose()
     }
 
 }
@@ -43,13 +31,12 @@ class GameMouse : Mouse() {
         }
     }
 
-    override fun mouseMovementAction(xPosition: Double, yPosition: Double): Unit {
+    override fun mouseMovementAction(xPosition: Double, yPosition: Double) {
 //        println("Mouse movement ($xPosition, $yPosition)")
     }
 }
 
 class GameKeyboard(
-    windowManager: WindowManager,
     sound: Sound? = null,
     scale: (() -> Unit)? = null
 ) : Keyboard() {
@@ -69,7 +56,7 @@ class GameKeyboard(
             setKeySpacePressed { println("Key SPACE pressed") }
             setKeySpaceReleased { println("Key SPACE released") }
 
-            setKeyEscReleased { windowManager.close() }
+            setKeyEscReleased { DependencyManager.windowManager.close() }
 
             setKeyF7JustPressed {
                 if (sound?.isPlaying() == true) {

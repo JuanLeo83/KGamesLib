@@ -1,16 +1,19 @@
 package kgames.core
 
-import kgames.core.input.InputManager
 import kgames.core.scene.SceneLoader
 
-abstract class VideoGame(
-    protected val inputManager: InputManager
-) {
+abstract class VideoGame() {
 
-    protected val sceneLoader = SceneLoader(inputManager)
+    protected val sceneLoader = SceneLoader(DependencyManager.inputManager)
 
     abstract fun initialize()
-    abstract fun gameLoop(deltaTime: Double)
-    abstract fun dispose()
+
+    fun gameLoop(deltaTime: Double) {
+        sceneLoader.currentScene.update(deltaTime)
+    }
+
+    open fun dispose() {
+        sceneLoader.currentScene.dispose()
+    }
 
 }

@@ -18,7 +18,7 @@ class Texture(
     private var width: Int
     private var height: Int
 
-    private var scale = 0.5f
+    private var scale = 1.0f
 
     init {
         val file = getFile()

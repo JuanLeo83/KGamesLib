@@ -28,9 +28,9 @@ dependencies {
     implementation("org.lwjgl:lwjgl-opengl")
     implementation("org.lwjgl:lwjgl-stb")
 
-//    val lwjglNatives = "natives-windows"
+    val lwjglNatives = "natives-windows"
 //    val lwjglNatives = "natives-linux"
-    val lwjglNatives = "natives-macos"
+//    val lwjglNatives = "natives-macos"
     runtimeOnly("org.lwjgl:lwjgl::$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-assimp::$lwjglNatives")
     runtimeOnly("org.lwjgl:lwjgl-glfw::$lwjglNatives")

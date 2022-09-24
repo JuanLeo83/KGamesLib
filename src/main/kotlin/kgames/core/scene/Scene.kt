@@ -4,14 +4,18 @@ import kgames.core.DependencyManager
 import kgames.core.event.EventEmitter
 import kgames.core.event.GameEvent
 import kgames.core.input.InputDevice
-import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 
-abstract class Scene() {
+abstract class Scene {
 
     protected var sceneConfig: SceneConfig? = null
     protected val inputs = ArrayList<InputDevice>()
     protected val gameEvents = EventEmitter()
+
+    private var coroutineDeferred: Deferred<Nothing>? = null
 
     abstract fun setSceneConfig()
 
@@ -21,9 +25,13 @@ abstract class Scene() {
     }
 
     protected fun listenEvents(action: (gameEvent: GameEvent) -> Unit) {
-        val result = GlobalScope.async {
+        coroutineDeferred = CoroutineScope(Dispatchers.Default).async {
             gameEvents.event.collect {
-                action(it)
+                if (it is GameEvent.GameQuit) {
+                    DependencyManager.windowManager.close()
+                } else {
+                    action(it)
+                }
             }
         }
     }
@@ -32,6 +40,7 @@ abstract class Scene() {
 
     open fun dispose() {
         DependencyManager.inputManager.resetInputs()
+        coroutineDeferred?.cancel()
     }
 
     private fun setInputs() {

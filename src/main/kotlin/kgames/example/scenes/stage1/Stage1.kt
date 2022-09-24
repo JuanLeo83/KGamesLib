@@ -27,7 +27,6 @@ class Stage1 : Scene() {
         super.initialize()
 
         sound = Sound("audio/sound.ogg", false)
-//        sound.play()
 
         listenEvents {
             when (it) {

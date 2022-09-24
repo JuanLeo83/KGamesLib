@@ -1,10 +1,13 @@
 package kgames.core.scene
 
 import kgames.core.DependencyManager
+import kgames.core.input.InputDevice
 
 abstract class Scene() {
 
     protected var sceneConfig: SceneConfig? = null
+
+    protected val inputs = ArrayList<InputDevice>()
 
     abstract fun setSceneConfig()
 
@@ -20,7 +23,7 @@ abstract class Scene() {
     }
 
     private fun setInputs() {
-        check(sceneConfig != null) { "The scene need a sceneConfig" }
+        check(sceneConfig != null) { "The scene needs a sceneConfig" }
         sceneConfig?.devices?.forEach { device -> device.add(DependencyManager.inputManager) }
     }
 

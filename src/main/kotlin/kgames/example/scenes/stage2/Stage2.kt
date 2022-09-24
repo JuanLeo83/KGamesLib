@@ -1,10 +1,12 @@
-package kgames.example
+package kgames.example.scenes.stage2
 
 import kgames.core.input.InputDevice
 import kgames.core.render.Shader
 import kgames.core.render.Texture
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneConfig
+import kgames.example.scenes.stage2.input.Stage2InputKeyboard
+import kgames.example.scenes.stage2.input.Stage2InputMouse
 
 class Stage2() : Scene() {
 
@@ -15,8 +17,8 @@ class Stage2() : Scene() {
 
     override fun setSceneConfig() {
         val inputs = ArrayList<InputDevice>()
-        inputs.add(GameMouse())
-        inputs.add(GameKeyboard() {
+        inputs.add(Stage2InputMouse())
+        inputs.add(Stage2InputKeyboard() {
             scale *= 0.99f
             sprite.setScale(scale)
         })

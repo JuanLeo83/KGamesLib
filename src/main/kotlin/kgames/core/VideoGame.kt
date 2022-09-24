@@ -4,7 +4,7 @@ import kgames.core.scene.SceneLoader
 
 abstract class VideoGame() {
 
-    protected val sceneLoader = SceneLoader(DependencyManager.inputManager)
+    protected val sceneLoader = SceneLoader()
 
     abstract fun initialize()
 

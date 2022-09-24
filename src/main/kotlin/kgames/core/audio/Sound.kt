@@ -98,8 +98,7 @@ class Sound(
 
     fun play() {
         if (!isPlaying && sourceIdIsValid()) {
-            val state = alGetSourcei(sourceId, AL_SOURCE_STATE)
-            if (state == AL_STOPPED) {
+            if (getState() == AL_STOPPED) {
                 isPlaying = false
                 alSourcei(sourceId, AL_POSITION, 0)
             }
@@ -127,8 +126,7 @@ class Sound(
 
     fun resume() {
         if (!isPlaying && sourceIdIsValid()) {
-            val state = alGetSourcei(sourceId, AL_SOURCE_STATE)
-            if (state == AL_PAUSED) {
+            if (getState() == AL_PAUSED) {
                 isPlaying = false
             }
             playSource()
@@ -141,12 +139,13 @@ class Sound(
 
     fun isPlaying(): Boolean {
         if (sourceIdIsValid()) {
-            val state = alGetSourcei(sourceId, AL_SOURCE_STATE)
-            isPlaying = state == AL_PLAYING
+            isPlaying = getState() == AL_PLAYING
         }
         return isPlaying
     }
 
     private fun sourceIdIsValid() = sourceId != invalidValue
+
+    private fun getState() = alGetSourcei(sourceId, AL_SOURCE_STATE)
 
 }

@@ -1,10 +1,6 @@
 package kgames.core.scene
 
-import kgames.core.input.InputManager
-
-class SceneLoader(
-    inputManager: InputManager
-) {
+class SceneLoader() {
 
     private val sceneDefaultPosition = 0
 

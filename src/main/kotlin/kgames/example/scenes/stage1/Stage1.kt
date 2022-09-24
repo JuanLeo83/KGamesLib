@@ -1,10 +1,10 @@
-package kgames.example
+package kgames.example.scenes.stage1
 
 import kgames.core.DependencyManager
 import kgames.core.audio.Sound
-import kgames.core.input.InputDevice
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneConfig
+import kgames.example.scenes.stage1.input.Stage1InputKeyboard
 import org.lwjgl.glfw.GLFW
 import org.lwjgl.glfw.GLFW.glfwGetFramebufferSize
 import org.lwjgl.opengl.GL11
@@ -19,15 +19,14 @@ class Stage1() : Scene() {
     private lateinit var sound: Sound
 
     override fun setSceneConfig() {
-        val inputs = ArrayList<InputDevice>()
-        inputs.add(GameKeyboard())
+        inputs.add(Stage1InputKeyboard(sound))
         sceneConfig = SceneConfig(inputs)
     }
 
     override fun initialize() {
+        sound = Sound("audio/sound.ogg", false)
         super.initialize()
 
-        sound = Sound("audio/sound.ogg", false)
         sound.play()
     }
 

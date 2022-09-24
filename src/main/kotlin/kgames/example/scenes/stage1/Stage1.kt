@@ -16,7 +16,7 @@ class Stage1 : Scene() {
     private var width: IntBuffer = MemoryUtil.memAllocInt(1)
     private var height: IntBuffer = MemoryUtil.memAllocInt(1)
 
-    private lateinit var sound: Sound
+    private var sound: Sound? = null
 
     override fun setSceneConfig() {
         inputs.add(Stage1InputKeyboard(gameEvents))
@@ -30,9 +30,9 @@ class Stage1 : Scene() {
 
         listenEvents {
             when (it) {
-                is Stage1Event.PlayMusic -> sound.play()
-                is Stage1Event.PauseMusic -> sound.pause()
-                is Stage1Event.StopMusic -> sound.stop()
+                is Stage1Event.PlayMusic -> sound?.play()
+                is Stage1Event.PauseMusic -> sound?.pause()
+                is Stage1Event.StopMusic -> sound?.stop()
             }
         }
     }
@@ -83,7 +83,7 @@ class Stage1 : Scene() {
         MemoryUtil.memFree(width)
         MemoryUtil.memFree(height)
 
-        sound.dispose()
+        sound?.dispose()
     }
 
 }

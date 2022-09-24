@@ -11,6 +11,8 @@ import kotlinx.coroutines.async
 
 abstract class Scene {
 
+    val sceneName: String = javaClass.simpleName
+
     protected var sceneConfig: SceneConfig? = null
     protected val inputs = ArrayList<InputDevice>()
     protected val gameEvents = EventEmitter()

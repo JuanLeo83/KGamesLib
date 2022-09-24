@@ -10,7 +10,7 @@ class GameExample() : VideoGame() {
         sceneLoader.addScene(Stage1())
         sceneLoader.addScene(Stage2())
 
-        sceneLoader.currentScene.initialize()
+        sceneLoader.currentScene?.initialize()
     }
 
 }

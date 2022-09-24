@@ -5,9 +5,9 @@ class SceneLoader() {
     private val sceneDefaultPosition = 0
 
     private val scenes = ArrayList<Scene>()
-    lateinit var currentScene: Scene
+    var currentScene: Scene? = null
 
-    fun setScenes(vararg scenes: Scene) {
+    fun addScenes(vararg scenes: Scene) {
         scenes.forEach(::addScene)
         selectSceneDefault()
     }
@@ -22,12 +22,43 @@ class SceneLoader() {
     }
 
     private fun selectSceneDefault() {
-        currentScene = scenes[sceneDefaultPosition]
+        selectSceneByPosition(sceneDefaultPosition)
     }
 
-    private fun selectScene(scenePosition: Int) {
-        currentScene.dispose()
+    private fun selectSceneByPosition(scenePosition: Int) {
+        currentScene?.dispose()
         currentScene = scenes[scenePosition]
+    }
+
+    fun selectScene(sceneName: String) {
+        findScene(sceneName)?.let {
+            currentScene?.dispose()
+            currentScene = it
+        }
+    }
+
+    fun nextScene() {
+        moveToNeighborScene(Direction.Forward)
+    }
+
+    fun previousScene() {
+        moveToNeighborScene(Direction.Backward)
+    }
+
+    private fun moveToNeighborScene(direction: Direction) {
+        currentScene?.let { current ->
+            val currentPosition = scenes.indexOf(current)
+            selectSceneByPosition(currentPosition + direction.value)
+        }
+    }
+
+    private fun findScene(sceneName: String): Scene? {
+        return scenes.find { scene -> scene.sceneName == sceneName }
+    }
+
+    private sealed class Direction(var value: Int) {
+        object Forward : Direction(1)
+        object Backward : Direction(-1)
     }
 
 }

@@ -9,11 +9,11 @@ abstract class VideoGame() {
     abstract fun initialize()
 
     fun gameLoop(deltaTime: Double) {
-        sceneLoader.currentScene.update(deltaTime)
+        sceneLoader.currentScene?.update(deltaTime)
     }
 
     open fun dispose() {
-        sceneLoader.currentScene.dispose()
+        sceneLoader.currentScene?.dispose()
     }
 
 }

@@ -8,19 +8,19 @@ import kgames.core.scene.SceneConfig
 import kgames.example.scenes.stage2.input.Stage2InputKeyboard
 import kgames.example.scenes.stage2.input.Stage2InputMouse
 
-class Stage2() : Scene() {
+class Stage2 : Scene() {
 
-    private lateinit var sprite: Texture
-    private lateinit var shader: Shader
+    private var sprite: Texture? = null
+    private var shader: Shader? = null
 
-    private var scale: Float = 0.01f
+    private var scale: Float = 1f
 
     override fun setSceneConfig() {
         val inputs = ArrayList<InputDevice>()
         inputs.add(Stage2InputMouse())
-        inputs.add(Stage2InputKeyboard() {
+        inputs.add(Stage2InputKeyboard {
             scale *= 0.99f
-            sprite.setScale(scale)
+            sprite?.setScale(scale)
         })
         sceneConfig = SceneConfig(inputs)
     }
@@ -29,18 +29,18 @@ class Stage2() : Scene() {
         super.initialize()
 
         sprite = Texture("sprite/ship.png")
-        sprite.setScale(scale)
+        sprite?.setScale(scale)
     }
 
     override fun update(deltaTime: Double) {
-        sprite.render()
+        sprite?.render()
         println("${getFPS(deltaTime)} FPS")
     }
 
     override fun dispose() {
         super.dispose()
 
-        sprite.dispose()
+        sprite?.dispose()
     }
 
 }

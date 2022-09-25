@@ -1,7 +1,9 @@
 package kgames.example.scenes.stage2.input
 
-import kgames.core.DependencyManager
+import kgames.core.KGames
+import kgames.core.event.GameEvent
 import kgames.core.input.keyboard.Keyboard
+import kgames.example.scenes.stage1.Stage1
 
 class Stage2InputKeyboard(
     scale: (() -> Unit)? = null
@@ -22,12 +24,12 @@ class Stage2InputKeyboard(
             setKeySpacePressed { println("Key SPACE pressed") }
             setKeySpaceReleased { println("Key SPACE released") }
 
-            setKeyEscReleased { DependencyManager.windowManager.close() }
+            setKeyEscReleased { KGames.gameEvents.emit(GameEvent.GameQuit) }
 
-            setKey1Pressed { scale?.let { it() } }
+            setKeySPressed { scale?.let { it() } }
 
             setKey1JustPressed {
-                // TODO emit event to change to the stage 1
+                KGames.gameEvents.emit(GameEvent.SelectScene(Stage1::class.java.simpleName))
             }
         }
     }

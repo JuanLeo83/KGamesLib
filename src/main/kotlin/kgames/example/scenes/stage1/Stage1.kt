@@ -1,7 +1,8 @@
 package kgames.example.scenes.stage1
 
-import kgames.core.DependencyManager
+import kgames.core.KGames
 import kgames.core.audio.Sound
+import kgames.core.event.GameEvent
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneConfig
 import kgames.example.scenes.stage1.input.Stage1InputKeyboard
@@ -19,7 +20,7 @@ class Stage1 : Scene() {
     private var sound: Sound? = null
 
     override fun setSceneConfig() {
-        inputs.add(Stage1InputKeyboard(gameEvents))
+        inputs.add(Stage1InputKeyboard())
         sceneConfig = SceneConfig(inputs)
     }
 
@@ -27,9 +28,11 @@ class Stage1 : Scene() {
         super.initialize()
 
         sound = Sound("audio/sound.ogg", false)
+    }
 
-        listenEvents {
-            when (it) {
+    override fun onEvent(gameEvent: GameEvent) {
+        super.onEvent(gameEvent).also {
+            when (gameEvent) {
                 is Stage1Event.PlayMusic -> sound?.play()
                 is Stage1Event.PauseMusic -> sound?.pause()
                 is Stage1Event.StopMusic -> sound?.stop()
@@ -43,7 +46,7 @@ class Stage1 : Scene() {
 
     private fun renderTriangle() {
         /* Get width and height to calculate the ratio */
-        glfwGetFramebufferSize(DependencyManager.windowManager.getWindow(), width, height)
+        glfwGetFramebufferSize(KGames.windowManager.getWindow(), width, height)
         val ratio = width.get() / height.get()
 
         /* Rewind buffers for next get */

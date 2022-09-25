@@ -9,9 +9,9 @@ import org.lwjgl.opengl.GL11.*
 class Game(
     private val videoGame: VideoGame
 ) {
-    private val windowManager = DependencyManager.windowManager
-    private val inputManager = DependencyManager.inputManager
-    private val audioManager = DependencyManager.audioManager
+    private val windowManager = KGames.windowManager
+    private val inputManager = KGames.inputManager
+    private val audioManager = KGames.audioManager
 
     private var errorCallback: GLFWErrorCallback? = null
 

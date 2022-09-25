@@ -41,8 +41,6 @@ dependencies {
 
     implementation("org.joml:joml:1.10.4")
 
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-
     testImplementation(kotlin("test"))
 }
 

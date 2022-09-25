@@ -1,6 +1,7 @@
 package kgames.core
 
 import kgames.core.audio.AudioManager
+import kgames.core.event.emitter.EventEmitterImp
 import kgames.core.input.InputManager
 import kgames.core.window.WindowManager
 
@@ -10,16 +11,14 @@ fun initGame(
     height: Int = 600,
     windowTitle: String = "KGamesLib Hello World :)"
 ) {
-    DependencyManager.width = width
-    DependencyManager.height = height
-    DependencyManager.windowTitle = windowTitle
+    KGames.width = width
+    KGames.height = height
+    KGames.windowTitle = windowTitle
 
     Game(videoGame).start()
 }
 
-class DependencyManager(
-
-) {
+class KGames {
     companion object {
         var width: Int = 800
         var height: Int = 600
@@ -28,5 +27,7 @@ class DependencyManager(
         val windowManager = WindowManager(width, height, title = windowTitle)
         val inputManager = InputManager(windowManager)
         val audioManager = AudioManager()
+
+        val gameEvents = EventEmitterImp()
     }
 }

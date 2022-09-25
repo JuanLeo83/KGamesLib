@@ -9,6 +9,7 @@ abstract class VideoGame() {
     abstract fun initialize()
 
     fun gameLoop(deltaTime: Double) {
+        KGames.gameEvents.update()
         sceneLoader.currentScene?.update(deltaTime)
     }
 

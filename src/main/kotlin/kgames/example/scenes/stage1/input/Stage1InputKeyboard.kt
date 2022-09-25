@@ -1,34 +1,33 @@
 package kgames.example.scenes.stage1.input
 
-import kgames.core.event.EventEmitter
+import kgames.core.KGames
 import kgames.core.event.GameEvent
 import kgames.core.input.keyboard.Keyboard
 import kgames.example.scenes.stage1.Stage1Event
+import kgames.example.scenes.stage2.Stage2
 
-class Stage1InputKeyboard(
-    gameEvents: EventEmitter
-) : Keyboard() {
+class Stage1InputKeyboard : Keyboard() {
 
     init {
         with(keyMap) {
             setKeyMJustPressed {
-                gameEvents.emit(Stage1Event.PlayMusic)
+                KGames.gameEvents.emit(Stage1Event.PlayMusic)
             }
 
             setKeyBJustPressed {
-                gameEvents.emit(Stage1Event.PauseMusic)
+                KGames.gameEvents.emit(Stage1Event.PauseMusic)
             }
 
             setKeyNJustPressed {
-                gameEvents.emit(Stage1Event.StopMusic)
+                KGames.gameEvents.emit(Stage1Event.StopMusic)
             }
 
             setKeyEscReleased {
-                gameEvents.emit(GameEvent.GameQuit)
+                KGames.gameEvents.emit(GameEvent.GameQuit)
             }
 
             setKey2JustPressed {
-                // TODO emit event to change to the stage 2
+                KGames.gameEvents.emit(GameEvent.SelectScene(Stage2::class.java.simpleName))
             }
         }
     }

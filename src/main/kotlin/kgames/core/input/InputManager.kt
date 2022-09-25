@@ -15,24 +15,43 @@ class InputManager(
     private var mousePositionCallback: GLFWCursorPosCallback? = null
 
     private val inputs = ArrayList<Input>()
+    private val nextInputs = ArrayList<Input>()
+
+    private var isPendingResetInputs: Boolean = false
 
     fun update() {
         inputs.forEach { it.update() }
+        removeInputs()
+        addNextInputs()
     }
 
     fun addKeyboard(gameKeyboard: Keyboard) {
         val keyboard = InputKeyboard(windowManager, gameKeyboard.keyMap)
-        inputs.add(keyboard)
+        nextInputs.add(keyboard)
     }
 
     fun addMouse(gameMouse: Mouse) {
         val mouse = InputMouse(windowManager, gameMouse.buttonMap, gameMouse::mouseMovementAction)
         mousePositionCallback = glfwSetCursorPosCallback(windowManager.getWindow(), mouse)
-        inputs.add(mouse)
+        nextInputs.add(mouse)
     }
 
     fun resetInputs() {
-        inputs.clear()
+        isPendingResetInputs = true
+    }
+
+    private fun removeInputs() {
+        if (isPendingResetInputs) {
+            inputs.clear()
+            isPendingResetInputs = false
+        }
+    }
+
+    private fun addNextInputs() {
+        if (nextInputs.isNotEmpty()) {
+            inputs.addAll(nextInputs)
+            nextInputs.clear()
+        }
     }
 
     fun dispose() {

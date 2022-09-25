@@ -1,6 +1,5 @@
 package kgames.example.scenes.stage2
 
-import kgames.core.input.InputDevice
 import kgames.core.render.Shader
 import kgames.core.render.Texture
 import kgames.core.scene.Scene
@@ -16,7 +15,6 @@ class Stage2 : Scene() {
     private var scale: Float = 1f
 
     override fun setSceneConfig() {
-        val inputs = ArrayList<InputDevice>()
         inputs.add(Stage2InputMouse())
         inputs.add(Stage2InputKeyboard {
             scale *= 0.99f

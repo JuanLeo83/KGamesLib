@@ -1,4 +1,4 @@
-package kgames.example
+package kgames.example.scenes
 
 import kgames.core.scene.Scene
 import kgames.core.scene.SceneProvider

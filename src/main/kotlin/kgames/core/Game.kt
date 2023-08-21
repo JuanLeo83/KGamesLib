@@ -4,11 +4,10 @@ import kgames.core.util.ErrorCallback
 import kgames.core.util.GlUtil.clearScreen
 import kgames.core.util.GlUtil.initGraphicSystem
 import kgames.core.util.GlUtil.setClearColor
-import kgames.core.util.GlfwUtil.initSystem
-import kgames.core.util.GlfwUtil.isGameFinished
-import kgames.core.util.GlfwUtil.pollEvents
-import kgames.core.util.GlfwUtil.swapBuffers
-import kgames.core.util.GlfwUtil.terminate
+import kgames.core.window.WindowUtil.initSystem
+import kgames.core.window.WindowUtil.pollEvents
+import kgames.core.window.WindowUtil.swapBuffers
+import kgames.core.window.WindowUtil.terminateSystem
 import kgames.core.util.KTime
 
 class Game(
@@ -59,7 +58,7 @@ class Game(
 
         setClearColor(0, 0, 0, 0)
 
-        while (!isGameFinished(windowManager.getWindow())) {
+        while (!windowManager.isClosingWindow()) {
             clearScreen()
 
             inputManager.update()
@@ -82,7 +81,7 @@ class Game(
         audioManager.dispose()
         windowManager.dispose()
 
-        terminate()
+        terminateSystem()
         errorCallback.dispose()
     }
 

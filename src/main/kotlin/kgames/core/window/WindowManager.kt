@@ -1,10 +1,10 @@
 package kgames.core.window
 
-import kgames.core.util.GlfwUtil.getBoolean
-import kgames.core.util.GlfwUtil.getNull
+import kgames.core.window.WindowUtil.getBoolean
+import kgames.core.window.WindowUtil.getNull
+import kgames.core.window.WindowUtil.getPrimaryMonitor
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWVidMode
-import org.lwjgl.system.MemoryUtil
 
 class WindowManager(
     private val windowConfig: WindowConfig = WindowConfig()
@@ -33,8 +33,8 @@ class WindowManager(
             currentWidth,
             currentHeight,
             windowConfig.title,
-            if (windowConfig.fullScreen) glfwGetPrimaryMonitor() else getNull(),
-            MemoryUtil.NULL
+            if (windowConfig.fullScreen) getPrimaryMonitor() else getNull(),
+            getNull()
         )
         checkWindow("Failed to create the GLFW window")
 
@@ -47,6 +47,8 @@ class WindowManager(
         checkWindow("Window has not been created yet...")
         glfwShowWindow(window)
     }
+
+    fun isClosingWindow(): Boolean = glfwWindowShouldClose(window)
 
     fun close() {
         glfwSetWindowShouldClose(window, true)
@@ -69,12 +71,14 @@ class WindowManager(
         check(vidMode != null) { "VidMode is null" }
 
         glfwSetWindowPos(
-            window, (vidMode.width() - currentWidth) / 2, (vidMode.height() - currentHeight) / 2
+            window,
+            (vidMode.width() - currentWidth) / 2,
+            (vidMode.height() - currentHeight) / 2
         )
     }
 
     private fun checkWindow(errorMessage: String) {
-        check(window != MemoryUtil.NULL && window != windowNull) { errorMessage }
+        check(window != getNull() && window != windowNull) { errorMessage }
     }
 
 }

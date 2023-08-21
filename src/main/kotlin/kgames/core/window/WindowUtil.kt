@@ -1,12 +1,12 @@
-package kgames.core.util
+package kgames.core.window
 
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.system.MemoryUtil
 
-internal object GlfwUtil {
+internal object WindowUtil {
     internal fun initSystem(): Boolean = glfwInit()
 
-    internal fun isGameFinished(window: Long): Boolean = glfwWindowShouldClose(window)
+    internal fun getPrimaryMonitor(): Long = glfwGetPrimaryMonitor()
 
     internal fun swapBuffers(window: Long) {
         glfwSwapBuffers(window)
@@ -16,7 +16,7 @@ internal object GlfwUtil {
         glfwPollEvents()
     }
 
-    internal fun terminate() {
+    internal fun terminateSystem() {
         glfwTerminate()
     }
 

@@ -15,7 +15,7 @@ internal object GlUtil {
     }
 
     internal fun setClearColor(red: Int, green: Int, blue: Int, alpha: Int) {
-        glClearColor(red.toFloat(), green.toFloat(), blue.toFloat(), alpha.toFloat())
+        setClearColor(red.toFloat(), green.toFloat(), blue.toFloat(), alpha.toFloat())
     }
 
     internal fun clearScreen() {

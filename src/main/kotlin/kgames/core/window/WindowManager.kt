@@ -1,25 +1,24 @@
 package kgames.core.window
 
+import kgames.core.util.GlfwUtil.getBoolean
+import kgames.core.util.GlfwUtil.getNull
 import org.lwjgl.glfw.GLFW.*
 import org.lwjgl.glfw.GLFWVidMode
 import org.lwjgl.system.MemoryUtil
 
 class WindowManager(
-    width: Int = 800,
-    height: Int = 600,
-    private val title: String = "KGamesLib Hello World :)",
-    private val fullScreen: Boolean = false
+    private val windowConfig: WindowConfig = WindowConfig()
 ) {
 
     private val windowNull: Long = -1000
     private var window: Long = windowNull
 
-    private var actualWidth: Int = 0
-    private var actualHeight: Int = 0
+    private var currentWidth: Int = 0
+    private var currentHeight: Int = 0
 
     init {
-        actualWidth = width
-        actualHeight = height
+        currentWidth = windowConfig.width
+        currentHeight = windowConfig.height
     }
 
     fun getWindow(): Long {
@@ -27,20 +26,14 @@ class WindowManager(
         return window
     }
 
-    fun getDimensions(): Pair<Int, Int> {
-        return Pair(actualWidth, actualHeight)
-    }
-
     fun createWindow() {
-        glfwDefaultWindowHints()
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
-        glfwWindowHint(GLFW_RESIZABLE, GLFW_TRUE)
+        setWindowHints(windowConfig)
 
         window = glfwCreateWindow(
-            actualWidth,
-            actualHeight,
-            title,
-            if (fullScreen) glfwGetPrimaryMonitor() else MemoryUtil.NULL,
+            currentWidth,
+            currentHeight,
+            windowConfig.title,
+            if (windowConfig.fullScreen) glfwGetPrimaryMonitor() else getNull(),
             MemoryUtil.NULL
         )
         checkWindow("Failed to create the GLFW window")
@@ -50,21 +43,9 @@ class WindowManager(
         glfwSwapInterval(1)
     }
 
-    private fun setWindowPositionInScreen() {
-        if (!fullScreen) {
-            val vidmode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
-            check(vidmode != null) { "Vidmode is null" }
-
-            glfwSetWindowPos(
-                window,
-                (vidmode.width() - actualWidth) / 2,
-                (vidmode.height() - actualHeight) / 2
-            )
-        }
-    }
-
-    private fun checkWindow(errorMessage: String) {
-        check(window != MemoryUtil.NULL && window != windowNull) { errorMessage }
+    fun showWindow() {
+        checkWindow("Window has not been created yet...")
+        glfwShowWindow(window)
     }
 
     fun close() {
@@ -73,6 +54,27 @@ class WindowManager(
 
     fun dispose() {
         glfwDestroyWindow(window)
+    }
+
+    private fun setWindowHints(windowConfig: WindowConfig) {
+        glfwDefaultWindowHints()
+        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
+        glfwWindowHint(GLFW_RESIZABLE, getBoolean(windowConfig.resizable))
+    }
+
+    private fun setWindowPositionInScreen() {
+        if (windowConfig.fullScreen) return
+
+        val vidMode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
+        check(vidMode != null) { "VidMode is null" }
+
+        glfwSetWindowPos(
+            window, (vidMode.width() - currentWidth) / 2, (vidMode.height() - currentHeight) / 2
+        )
+    }
+
+    private fun checkWindow(errorMessage: String) {
+        check(window != MemoryUtil.NULL && window != windowNull) { errorMessage }
     }
 
 }

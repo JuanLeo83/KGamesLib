@@ -3,6 +3,7 @@ package kgames.core
 import kgames.core.audio.AudioManager
 import kgames.core.event.emitter.EventEmitterImp
 import kgames.core.input.InputManager
+import kgames.core.window.WindowConfig
 import kgames.core.window.WindowManager
 
 fun initGame(
@@ -24,7 +25,7 @@ class KGames {
         var height: Int = 600
         var windowTitle: String = "KGamesLib Hello World :)"
 
-        val windowManager = WindowManager(width, height, title = windowTitle)
+        val windowManager = WindowManager()
         val inputManager = InputManager(windowManager)
         val audioManager = AudioManager()
 

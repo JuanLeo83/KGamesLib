@@ -1,10 +1,15 @@
 package kgames.core
 
+import kgames.core.util.ErrorCallback
+import kgames.core.util.GlUtil.clearScreen
+import kgames.core.util.GlUtil.initGraphicSystem
+import kgames.core.util.GlUtil.setClearColor
+import kgames.core.util.GlfwUtil.initSystem
+import kgames.core.util.GlfwUtil.isGameFinished
+import kgames.core.util.GlfwUtil.pollEvents
+import kgames.core.util.GlfwUtil.swapBuffers
+import kgames.core.util.GlfwUtil.terminate
 import kgames.core.util.KTime
-import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.glfw.GLFWErrorCallback
-import org.lwjgl.opengl.GL
-import org.lwjgl.opengl.GL11.*
 
 class Game(
     private val videoGame: VideoGame
@@ -13,7 +18,7 @@ class Game(
     private val inputManager = KGames.inputManager
     private val audioManager = KGames.audioManager
 
-    private var errorCallback: GLFWErrorCallback? = null
+    private lateinit var errorCallback: ErrorCallback
 
     fun start() {
         initialize() { videoGame.initialize() }
@@ -23,16 +28,16 @@ class Game(
 
     private fun initialize(gameInit: () -> Unit) {
         setErrorCallback()
-        check(glfwInit()) { "Unable to initialize GLFW" }
+        check(initSystem()) { "Unable to initialize GLFW" }
         createWindow()
         initAudio()
-        initGL()
+        initGraphicSystem()
         gameInit()
         showWindow()
     }
 
     private fun setErrorCallback() {
-        errorCallback = glfwSetErrorCallback(GLFWErrorCallback.createPrint(System.err))
+        errorCallback = ErrorCallback()
     }
 
     private fun createWindow() {
@@ -43,32 +48,26 @@ class Game(
         audioManager.init()
     }
 
-    private fun initGL() {
-        GL.createCapabilities()
-        glEnable(GL_TEXTURE_2D)
-    }
-
     private fun showWindow() {
-        glfwShowWindow(windowManager.getWindow())
+        windowManager.showWindow()
     }
 
     private fun loop(gameLoop: (deltaTime: Double) -> Unit) {
         var beginTime = KTime.getTime()
         var endTime = 0.0
         var deltaTime = 0.0
-        GL.createCapabilities()
 
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f)
+        setClearColor(0, 0, 0, 0)
 
-        while (!glfwWindowShouldClose(windowManager.getWindow())) {
-            glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
+        while (!isGameFinished(windowManager.getWindow())) {
+            clearScreen()
 
             inputManager.update()
 
             gameLoop(deltaTime)
 
-            glfwSwapBuffers(windowManager.getWindow())
-            glfwPollEvents()
+            swapBuffers(windowManager.getWindow())
+            pollEvents()
 
             endTime = KTime.getTime()
             deltaTime = endTime - beginTime
@@ -83,8 +82,8 @@ class Game(
         audioManager.dispose()
         windowManager.dispose()
 
-        glfwTerminate()
-        errorCallback?.free()
+        terminate()
+        errorCallback.dispose()
     }
 
 }

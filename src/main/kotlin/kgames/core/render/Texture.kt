@@ -6,7 +6,10 @@ import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL13.GL_TEXTURE0
 import org.lwjgl.opengl.GL13.glActiveTexture
+import org.lwjgl.system.MemoryUtil
+import org.lwjgl.system.MemoryUtil.memFree
 import java.io.File
+import java.nio.ByteBuffer
 import javax.imageio.ImageIO
 
 class Texture(
@@ -18,6 +21,8 @@ class Texture(
     private var width: Int
     private var height: Int
 
+    private val pixels: ByteBuffer
+
     private var scale = 1.0f
 
     init {
@@ -28,7 +33,7 @@ class Texture(
 
         val pixelsRaw = bufferedImage.getRGB(0, 0, width, height, null, 0, width)
 
-        val pixels = BufferUtils.createByteBuffer(width * height * 4)
+        pixels = MemoryUtil.memAlloc(width * height * 4)
         for (i in 0 until width) {
             for (j in 0 until height) {
                 val pixel = pixelsRaw[i * width + j]
@@ -43,8 +48,8 @@ class Texture(
         textureObject = glGenTextures()
         glBindTexture(GL_TEXTURE_2D, textureObject)
 
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST.toFloat())
-        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST.toFloat())
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixels)
     }
 
@@ -78,7 +83,9 @@ class Texture(
     }
 
     fun dispose() {
+        glEnable(0)
         glDeleteTextures(textureObject)
+        memFree(pixels)
     }
 
 }

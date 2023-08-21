@@ -41,6 +41,8 @@ dependencies {
 
     implementation("org.joml:joml:1.10.4")
 
+    implementation("org.l33tlabs.twl:pngdecoder:1.0")
+
     testImplementation(kotlin("test"))
 }
 

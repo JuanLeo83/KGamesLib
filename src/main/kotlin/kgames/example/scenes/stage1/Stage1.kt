@@ -83,8 +83,8 @@ class Stage1 : Scene() {
     override fun dispose() {
         super.dispose()
 
-//        MemoryUtil.memFree(width)
-//        MemoryUtil.memFree(height)
+        MemoryUtil.memFree(width)
+        MemoryUtil.memFree(height)
 
         sound?.dispose()
     }

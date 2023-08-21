@@ -48,7 +48,7 @@ class Shader(
 
     private fun checkCompileStatus(shaderObject: Int, status: Int) {
         if (glGetShaderi(shaderObject, status) != 1) {
-            System.err.println(glGetShaderInfoLog(shaderObject));
+            System.err.println(glGetShaderInfoLog(shaderObject, 1024));
             exitProcess(1)
         }
     }

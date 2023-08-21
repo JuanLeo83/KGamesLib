@@ -1,6 +1,5 @@
 package kgames.core.window
 
-import kgames.core.window.WindowUtil.getBoolean
 import kgames.core.window.WindowUtil.getNull
 import kgames.core.window.WindowUtil.getPrimaryMonitor
 import org.lwjgl.glfw.GLFW.*
@@ -60,12 +59,17 @@ class WindowManager(
 
     private fun setWindowHints(windowConfig: WindowConfig) {
         glfwDefaultWindowHints()
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
-        glfwWindowHint(GLFW_RESIZABLE, getBoolean(windowConfig.resizable))
+        with(windowConfig) {
+            glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
+            glfwWindowHint(GLFW_RESIZABLE, getResizable())
+            glfwWindowHint(GLFW_DECORATED, getDecorated())
+            glfwWindowHint(GLFW_FLOATING, getAlwaysOnTop())
+            glfwWindowHint(GLFW_MAXIMIZED, getStartMaximized())
+        }
     }
 
     private fun setWindowPositionInScreen() {
-        if (windowConfig.fullScreen) return
+        if (windowConfig.fullScreen || windowConfig.startMaximized) return
 
         val vidMode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
         check(vidMode != null) { "VidMode is null" }

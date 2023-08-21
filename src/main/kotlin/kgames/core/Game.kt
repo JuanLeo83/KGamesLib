@@ -56,7 +56,7 @@ class Game(
         var endTime = 0.0
         var deltaTime = 0.0
 
-        setClearColor(0, 0, 0, 0)
+        setClearColor(0.5f, 0.5f, 0.5f, 1f)
 
         while (!windowManager.isClosingWindow()) {
             clearScreen()

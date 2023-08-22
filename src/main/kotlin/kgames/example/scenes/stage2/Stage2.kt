@@ -32,7 +32,7 @@ class Stage2 : Scene() {
 
     override fun update(deltaTime: Double) {
         sprite?.render()
-        println("${getFPS(deltaTime)} FPS")
+//        println("${getFPS(deltaTime)} FPS")
     }
 
     override fun dispose() {

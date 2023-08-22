@@ -22,4 +22,8 @@ internal object GlUtil {
         glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT)
     }
 
+    internal fun setViewPort(width: Int, height: Int) {
+        glViewport(0, 0, width, height)
+    }
+
 }

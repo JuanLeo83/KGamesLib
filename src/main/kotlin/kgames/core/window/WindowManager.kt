@@ -1,9 +1,9 @@
 package kgames.core.window
 
+import kgames.core.util.GlUtil.setViewPort
 import kgames.core.window.WindowUtil.getNull
 import kgames.core.window.WindowUtil.getPrimaryMonitor
 import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.glfw.GLFWVidMode
 
 class WindowManager(
     private val windowConfig: WindowConfig = WindowConfig()
@@ -37,9 +37,17 @@ class WindowManager(
         )
         checkWindow("Failed to create the GLFW window")
 
+        setWindowResizeCallback()
         setWindowPositionInScreen()
         glfwMakeContextCurrent(window)
         glfwSwapInterval(1)
+    }
+
+    fun resize(width: Int, height: Int) {
+        currentWidth = width
+        currentHeight = height
+
+        setViewPort(currentWidth, currentHeight)
     }
 
     fun showWindow() {
@@ -68,17 +76,12 @@ class WindowManager(
         }
     }
 
+    private fun setWindowResizeCallback() {
+        WindowResizeCallback(this)
+    }
+
     private fun setWindowPositionInScreen() {
-        if (windowConfig.fullScreen || windowConfig.startMaximized) return
-
-        val vidMode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
-        check(vidMode != null) { "VidMode is null" }
-
-        glfwSetWindowPos(
-            window,
-            (vidMode.width() - currentWidth) / 2,
-            (vidMode.height() - currentHeight) / 2
-        )
+        WindowLocator(window, windowConfig, currentWidth, currentHeight)
     }
 
     private fun checkWindow(errorMessage: String) {

@@ -8,7 +8,7 @@ data class WindowConfig(
     val height: Int = 600,
     val fullScreen: Boolean = false,
     val startMaximized: Boolean = false,
-    private val resizable: Boolean = false,
+    private val resizable: Boolean = true,
     private val decorated: Boolean = true,
     private val alwaysOnTop: Boolean = false,
 ) {

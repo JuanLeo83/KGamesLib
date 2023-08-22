@@ -6,6 +6,7 @@ data class WindowConfig(
     val title: String = "KGamesLib :)",
     val width: Int = 800,
     val height: Int = 600,
+    val aspectRatio: AspectRatio = AspectRatio.Rw16h9,
     val fullScreen: Boolean = false,
     val startMaximized: Boolean = false,
     private val resizable: Boolean = true,

@@ -1,8 +1,8 @@
 package kgames.core.window
 
-import kgames.core.util.GlUtil.setViewPort
 import kgames.core.window.WindowUtil.getNull
 import kgames.core.window.WindowUtil.getPrimaryMonitor
+import kgames.core.window.WindowUtil.getVidMode
 import org.lwjgl.glfw.GLFW.*
 
 class WindowManager(
@@ -12,12 +12,14 @@ class WindowManager(
     private val windowNull: Long = -1000
     private var window: Long = windowNull
 
-    private var currentWidth: Int = 0
-    private var currentHeight: Int = 0
+    private var windowWidth: Int = 0
+    private var windowHeight: Int = 0
+
+    private val viewport: Viewport = Viewport(windowConfig.aspectRatio)
 
     init {
-        currentWidth = windowConfig.width
-        currentHeight = windowConfig.height
+        windowWidth = windowConfig.width
+        windowHeight = windowConfig.height
     }
 
     fun getWindow(): Long {
@@ -26,32 +28,36 @@ class WindowManager(
     }
 
     fun createWindow() {
-        setWindowHints(windowConfig)
+        WindowHint(windowConfig)
+        checkWindowDimensions()
 
         window = glfwCreateWindow(
-            currentWidth,
-            currentHeight,
+            windowWidth,
+            windowHeight,
             windowConfig.title,
             if (windowConfig.fullScreen) getPrimaryMonitor() else getNull(),
             getNull()
         )
         checkWindow("Failed to create the GLFW window")
 
-        setWindowResizeCallback()
-        setWindowPositionInScreen()
+        WindowResizeCallback(this)
+        WindowLocator(window, windowConfig, windowWidth, windowHeight)
         glfwMakeContextCurrent(window)
         glfwSwapInterval(1)
+
+        viewport.setSize(windowWidth, windowHeight)
     }
 
     fun resize(width: Int, height: Int) {
-        currentWidth = width
-        currentHeight = height
-
-        setViewPort(currentWidth, currentHeight)
+        windowWidth = width
+        windowHeight = height
+        viewport.setSize(windowWidth, windowHeight)
+        viewport.set()
     }
 
     fun showWindow() {
         checkWindow("Window has not been created yet...")
+        viewport.set()
         glfwShowWindow(window)
     }
 
@@ -65,23 +71,13 @@ class WindowManager(
         glfwDestroyWindow(window)
     }
 
-    private fun setWindowHints(windowConfig: WindowConfig) {
-        glfwDefaultWindowHints()
-        with(windowConfig) {
-            glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE)
-            glfwWindowHint(GLFW_RESIZABLE, getResizable())
-            glfwWindowHint(GLFW_DECORATED, getDecorated())
-            glfwWindowHint(GLFW_FLOATING, getAlwaysOnTop())
-            glfwWindowHint(GLFW_MAXIMIZED, getStartMaximized())
+    private fun checkWindowDimensions() {
+        if (windowConfig.fullScreen) {
+            getVidMode()?.let {
+                windowWidth = it.width()
+                windowHeight = it.height()
+            }
         }
-    }
-
-    private fun setWindowResizeCallback() {
-        WindowResizeCallback(this)
-    }
-
-    private fun setWindowPositionInScreen() {
-        WindowLocator(window, windowConfig, currentWidth, currentHeight)
     }
 
     private fun checkWindow(errorMessage: String) {

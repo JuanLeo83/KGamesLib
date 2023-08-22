@@ -1,6 +1,7 @@
 package kgames.core.window
 
 import org.lwjgl.glfw.GLFW.*
+import org.lwjgl.glfw.GLFWVidMode
 import org.lwjgl.system.MemoryUtil
 
 internal object WindowUtil {
@@ -23,4 +24,6 @@ internal object WindowUtil {
     internal fun getBoolean(value: Boolean): Int = if (value) GLFW_TRUE else GLFW_FALSE
 
     internal fun getNull(): Long = MemoryUtil.NULL
+
+    internal fun getVidMode(): GLFWVidMode? = glfwGetVideoMode(getPrimaryMonitor())
 }

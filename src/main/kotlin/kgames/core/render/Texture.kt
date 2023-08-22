@@ -9,9 +9,7 @@ import org.lwjgl.opengl.GL13.glActiveTexture
 import java.io.File
 import javax.imageio.ImageIO
 
-class Texture(
-    private val filePath: String
-) {
+class Texture(filePath: String) {
 
     private var textureObject: Int
 
@@ -21,7 +19,7 @@ class Texture(
     private var scale = 1.0f
 
     init {
-        val file = getFile()
+        val file = KFile(KFolder.getRootFolder(), filePath).getFile()
         val bufferedImage = ImageIO.read(file)
         width = bufferedImage.width
         height = bufferedImage.height
@@ -49,11 +47,6 @@ class Texture(
 
         glEnable(GL_BLEND)
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
-    }
-
-    private fun getFile(): File {
-        val file = KFile(KFolder.getRootFolder(), filePath)
-        return file.getFile()
     }
 
     fun bind(sampler: Int) {

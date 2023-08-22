@@ -1,13 +1,12 @@
 package kgames.core.window
 
-import org.lwjgl.glfw.GLFW.*
-import org.lwjgl.glfw.GLFWVidMode
+import kgames.core.window.WindowUtil.getVidMode
+import org.lwjgl.glfw.GLFW.glfwSetWindowPos
 
 class WindowLocator(window: Long, windowConfig: WindowConfig, currentWidth: Int, currentHeight: Int) {
     init {
         if (!windowConfig.fullScreen && !windowConfig.startMaximized) {
-
-            val vidMode: GLFWVidMode? = glfwGetVideoMode(glfwGetPrimaryMonitor())
+            val vidMode = getVidMode()
             check(vidMode != null) { "VidMode is null" }
 
             glfwSetWindowPos(
